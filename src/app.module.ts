@@ -12,8 +12,8 @@ import {
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailModule } from './mail/mail.module';
 import { UserModule } from './user/user.module';
-import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
-import { APP_INTERCEPTOR } from '@nestjs/core';
+// import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+// import { APP_INTERCEPTOR } from '@nestjs/core';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { LogsController } from './log.controller';
 import { CommonModule } from './common/common.module';

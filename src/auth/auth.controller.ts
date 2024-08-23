@@ -28,11 +28,9 @@ import { uploadImages } from 'src/common/configs/multer.config';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { codeGenerator, generateRandomAvatar } from 'src/common/utils';
 import { IDecodedToken } from './auth.interface';
-import { MailService } from 'src/mail/mail.service';
 import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
-import { uploadToCloudinary } from 'src/common/helpers/cloudinary.helper';
 import { BucketService } from 'src/bucket/bucket.service';
 
 @Controller('auth')
