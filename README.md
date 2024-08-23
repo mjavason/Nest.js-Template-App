@@ -74,7 +74,7 @@ Testing is an important part of the development process, and this template suppo
 Here's an overview of the project structure:
 
 ```
-src/
+|── src/
 │   ├── app.module.ts          # Main application module
 │   ├── app.controller.ts      # Main app controller
 │   ├── log.controller.ts      # Logging controller
