@@ -24,7 +24,7 @@ export class UserController {
     return auth;
   }
 
-  @Patch('/:id')
+  @Patch()
   @ApiOperation({ summary: 'Update logged in user profile' })
   @UseInterceptors(FileInterceptor('avatar', uploadImages))
   @ApiConsumes('multipart/form-data')

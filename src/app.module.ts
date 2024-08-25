@@ -4,7 +4,7 @@ import { AuthModule } from './auth/auth.module';
 import { MailModule } from './mail/mail.module';
 import { UserModule } from './user/user.module';
 import { AppController } from './app.controller';
-import { LogsController } from './log.controller';
+import { LogsController } from './common/controllers/log.controller';
 import { MongooseModule } from '@nestjs/mongoose';
 import { BucketModule } from './bucket/bucket.module';
 import { CommonModule } from './common/common.module';
