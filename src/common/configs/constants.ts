@@ -15,9 +15,7 @@ export const appConfig = registerAs('app', () => ({
 
 export const databaseConfig = registerAs('db', () => ({
   name: process.env.MONGO_DB_NAME || 'startup',
-  url:
-    process.env.MONGO_DB_URL + MONGO_DB_NAME ||
-    'mongodb://localhost:27017/' + MONGO_DB_NAME,
+  url: process.env.MONGO_DB_URL + MONGO_DB_NAME || 'mongodb://localhost:27017/' + MONGO_DB_NAME,
 }));
 
 export const cloudinaryConfig = registerAs('cloudinary', () => ({
@@ -36,16 +34,13 @@ export const mailConfig = registerAs('mail', () => ({
 export const MAIL_ADDRESS = process.env.MAIL_ADDRESS || 'admin@startup.com';
 export const MAIL_PASSWORD = process.env.MAIL_PASSWORD || 'xxx';
 
-export const CLOUDINARY_API_NAME =
-  process.env.CLOUDINARY_API_NAME || 'cloudinary';
+export const CLOUDINARY_API_NAME = process.env.CLOUDINARY_API_NAME || 'cloudinary';
 export const CLOUDINARY_API_KEY = process.env.CLOUDINARY_API_KEY || '12345';
-export const CLOUDINARY_API_SECRET =
-  process.env.CLOUDINARY_API_SECRET || 'xxxx';
+export const CLOUDINARY_API_SECRET = process.env.CLOUDINARY_API_SECRET || 'xxxx';
 
 export const MONGO_DB_NAME = process.env.MONGO_DB_NAME || 'startup';
 export const MONGO_DB_URL =
-  process.env.MONGO_DB_URL + MONGO_DB_NAME ||
-  'mongodb://localhost:27017/' + MONGO_DB_NAME;
+  process.env.MONGO_DB_URL + MONGO_DB_NAME || 'mongodb://localhost:27017/' + MONGO_DB_NAME;
 
 export const PORT = process.env.PORT || 5000;
 
@@ -53,7 +48,7 @@ export const APP_NAME = process.env.APP_NAME || 'Startup';
 export const JWT_SECRET = process.env.JWT_SECRET || 'xxx';
 export const API_PREFIX = 'api/v1';
 export const NODE_ENV = process.env.NODE_ENV || 'development';
-export const BASE_URL = process.env.BASE_URL || 'http://locahost:5000';
+export const BASE_URL = process.env.BASE_URL || `http://locahost:${PORT}`;
 
 export const MESSAGES = {
   FETCHED: 'Resource retrieved successfully',
@@ -72,10 +67,8 @@ export const MESSAGES = {
   LOGIN_FIRST: 'Oops! Please log in first to proceed',
   LOGGED_IN: "You've been successfully logged in",
   LOGIN_FAILURE: 'Login failed. Please check your email and password',
-  USER_UNAUTHORIZED:
-    'Unauthorized access: You are not allowed to take this action.',
-  USER_NOT_LOGGED_IN:
-    'Unauthorized access: Please log in to access this resource.',
+  USER_UNAUTHORIZED: 'Unauthorized access: You are not allowed to take this action.',
+  USER_NOT_LOGGED_IN: 'Unauthorized access: Please log in to access this resource.',
   USER_NOT_FOUND: 'User not found',
   MAIL_SENT: 'Email sent successfully. Please check your inbox!',
   INVALID_UNIQUE_ID: 'Invalid unique identifier provided',
@@ -89,8 +82,7 @@ export const MESSAGES = {
   SUCCESS_MSG_RESPONSE: 'Success! The operation was completed successfully',
   FAILURE_MSG_RESPONSE: 'Oops! The operation failed to complete',
   ACCESS_TOKEN_ERROR_RESPONSE: 'Access token is invalid. Please log in again',
-  TOKEN_REFRESH_RESPONSE:
-    'Success! The access token was refreshed successfully',
+  TOKEN_REFRESH_RESPONSE: 'Success! The access token was refreshed successfully',
   ROUTE_NOT_FOUND: "Sorry, the page you're looking for doesn't exist",
   WELCOME_V1: 'Welcome to Version 1',
   COMING_SOON:

@@ -17,10 +17,7 @@ export const loggerConfig = WinstonModule.createLogger({
       zippedArchive: true,
       maxSize: '20m',
       maxFiles: '14d',
-      format: winston.format.combine(
-        winston.format.timestamp(),
-        winston.format.json(),
-      ),
+      format: winston.format.combine(winston.format.timestamp(), winston.format.json()),
     }),
   ],
 });

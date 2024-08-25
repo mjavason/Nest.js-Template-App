@@ -24,11 +24,7 @@ interface IUserStatics {
   userExists(email: string): Promise<boolean>;
 }
 
-export interface IUserDocument
-  extends IUser,
-    Document,
-    IUserMethods,
-    IUserStatics {}
+export interface IUserDocument extends IUser, Document, IUserMethods, IUserStatics {}
 
 export enum Status {
   ACTIVE = 'active',

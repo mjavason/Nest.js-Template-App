@@ -1,8 +1,4 @@
-import {
-  Injectable,
-  InternalServerErrorException,
-  NotFoundException,
-} from '@nestjs/common';
+import { Injectable, InternalServerErrorException, NotFoundException } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
 import { IUserDocument } from 'src/user/user.interface';
 import { IDecodedToken } from './auth.interface';
@@ -37,8 +33,7 @@ export class AuthService {
     }
 
     return {
-      message:
-        "Registration successful. We've sent you an account verification email",
+      message: "Registration successful. We've sent you an account verification email",
       data,
     };
   }
@@ -59,9 +54,7 @@ export class AuthService {
       `${this.config.get('app.baseURL')}/${this.config.get('app.apiPrefix')}/auth/reset-password/${verificationToken}`,
     );
     if (!mailSent)
-      throw new InternalServerErrorException(
-        'Request failed: Unable to send verification mail',
-      );
+      throw new InternalServerErrorException('Request failed: Unable to send verification mail');
 
     return {
       message: 'Forgot password request made successfully. Check your email',

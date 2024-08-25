@@ -26,10 +26,7 @@ const defaultUploadSettings = {
 const imageUploadSettings = {
   fileFilter: (req, file, callback) => {
     if (!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
-      return callback(
-        new BadRequestException('Only image files are allowed!'),
-        false,
-      );
+      return callback(new BadRequestException('Only image files are allowed!'), false);
     }
     callback(null, true);
   },

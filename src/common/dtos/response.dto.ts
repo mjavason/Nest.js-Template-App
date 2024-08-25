@@ -19,5 +19,5 @@ export class SuccessResponseDTO {
   message: string;
 
   @ApiProperty({ required: false })
-  data?: any;
+  data?: unknown;
 }

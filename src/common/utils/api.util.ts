@@ -12,7 +12,7 @@ export class ApiService {
   private async request<T>(
     method: string,
     url: string,
-    data: any = null,
+    data: unknown = null,
     config: AxiosRequestConfig = {},
   ): Promise<T> {
     try {
@@ -34,27 +34,15 @@ export class ApiService {
     return this.request<T>('GET', url, null, config);
   }
 
-  async post<T>(
-    url: string,
-    data: any,
-    config: AxiosRequestConfig = {},
-  ): Promise<T> {
+  async post<T>(url: string, data: unknown, config: AxiosRequestConfig = {}): Promise<T> {
     return this.request<T>('POST', url, data, config);
   }
 
-  async put<T>(
-    url: string,
-    data: any,
-    config: AxiosRequestConfig = {},
-  ): Promise<T> {
+  async put<T>(url: string, data: unknown, config: AxiosRequestConfig = {}): Promise<T> {
     return this.request<T>('PUT', url, data, config);
   }
 
-  async patch<T>(
-    url: string,
-    data: any,
-    config: AxiosRequestConfig = {},
-  ): Promise<T> {
+  async patch<T>(url: string, data: unknown, config: AxiosRequestConfig = {}): Promise<T> {
     return this.request<T>('PATCH', url, data, config);
   }
 

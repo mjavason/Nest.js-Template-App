@@ -37,8 +37,7 @@ const getRandomAvatarStyle = (): string => {
 function generateRandomAvatar(email: string): string {
   const _email = email.trim();
 
-  const entropySource = (): string =>
-    Math.random().toString(36).substring(2, 7);
+  const entropySource = (): string => Math.random().toString(36).substring(2, 7);
 
   const replaceAt = `-${entropySource()}-`;
   const replaceDot = `-${entropySource()}-`;

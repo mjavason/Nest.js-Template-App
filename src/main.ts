@@ -1,14 +1,15 @@
-import { NestFactory } from '@nestjs/core';
-import { AppModule } from './app.module';
-import { ValidationPipe } from '@nestjs/common';
-import { setupSwagger } from './common/configs';
-import helmet from 'helmet';
-import { HttpExceptionFilter } from './common/filter/error.filter';
-import { ConfigService } from '@nestjs/config';
-import { loggerConfig } from './common/utils/logger.util';
 import cookieParser from 'cookie-parser';
+import helmet from 'helmet';
+import { AppModule } from './app.module';
+import { ConfigService } from '@nestjs/config';
+import { HttpExceptionFilter } from './common/filter/error.filter';
+import { loggerConfig } from './common/utils/logger.util';
+import { NestFactory } from '@nestjs/core';
+import { setupSwagger } from './common/configs';
 import { TransformInterceptor } from './common/interceptors/transform.intrerceptor';
-import './common/utils/wakey.util'; //self ping
+import { ValidationPipe } from '@nestjs/common';
+import './common/utils/ping.util';
+//self ping
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {

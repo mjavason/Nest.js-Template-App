@@ -1,10 +1,4 @@
-import {
-  Controller,
-  Get,
-  Res,
-  HttpException,
-  HttpStatus,
-} from '@nestjs/common';
+import { Controller, Get, Res, HttpException, HttpStatus } from '@nestjs/common';
 import { ApiTags, ApiOperation, ApiResponse } from '@nestjs/swagger';
 import { Response } from 'express';
 import fs from 'fs';
@@ -33,25 +27,21 @@ export class LogsController {
     });
 
     output.on('close', () => {
-      console.log(
-        `Logs.zip has been created, total bytes: ${archive.pointer()}`,
-      );
+      console.log(`Logs.zip has been created, total bytes: ${archive.pointer()}`);
       res.download(path.join(__dirname, 'logs.zip'), 'logs.zip', (err) => {
         if (err) {
-          throw new HttpException(
-            'Error downloading the logs',
-            HttpStatus.INTERNAL_SERVER_ERROR,
-          );
+          throw new HttpException('Error downloading the logs', HttpStatus.INTERNAL_SERVER_ERROR);
         }
         fs.unlinkSync(path.join(__dirname, 'logs.zip')); // Clean up the zip file after download
       });
     });
 
-    archive.on('error', (err: any) => {
-      throw new HttpException(
-        `Error archiving the logs: ${err.message}`,
-        HttpStatus.INTERNAL_SERVER_ERROR,
-      );
+    archive.on('error', (e: unknown) => {
+      if (e instanceof Error)
+        throw new HttpException(
+          `Error archiving the logs: ${e.message}`,
+          HttpStatus.INTERNAL_SERVER_ERROR,
+        );
     });
 
     archive.pipe(output);

@@ -14,6 +14,7 @@ import { upload } from 'src/common/configs';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { FileUploadDTO } from 'src/common/dtos/file.dto';
+import { IUserDocument } from 'src/user/user.interface';
 
 @Controller('bucket')
 @ApiTags('File Bucket')
@@ -26,30 +27,19 @@ export class BucketController {
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FileUploadDTO })
   @Auth()
-  async uploadFile(
-    @UploadedFile() uploadedFile: MulterFile,
-    @CurrentUser() auth: { id: string },
-  ) {
+  async uploadFile(@UploadedFile() uploadedFile: MulterFile, @CurrentUser() auth: IUserDocument) {
     if (!uploadedFile) throw new BadRequestException('No file uploaded');
 
-    return await this.bucketService.uploadToCloudinary(
-      uploadedFile.path,
-      undefined,
-      auth.id,
-    );
+    return await this.bucketService.uploadToCloudinary(uploadedFile.path, undefined, auth.id);
   }
 
   @Delete('delete-upload/:url')
   @ApiOperation({
     summary: 'Delete a file uploaded to the platform bucket',
-    description:
-      'This removes the file from the bucket database and from cloudinary itself',
+    description: 'This removes the file from the bucket database and from cloudinary itself',
   })
   @Auth()
-  async deleteUpload(
-    @Param('url') url: string,
-    @CurrentUser() auth: { id: string },
-  ) {
+  async deleteUpload(@Param('url') url: string, @CurrentUser() auth: IUserDocument) {
     return await this.bucketService.deleteFromCloudinary(url, auth.id);
   }
 }

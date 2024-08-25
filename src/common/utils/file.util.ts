@@ -18,10 +18,7 @@ export function generateRandomFileName(extension: string): string {
 }
 
 // Function to store a file in the temporary folder
-export function storeFileInTempFolder(
-  data: string | Buffer,
-  extension: string,
-): Promise<string> {
+export function storeFileInTempFolder(data: string | Buffer, extension: string): Promise<string> {
   const tempDir = os.tmpdir();
   const fileName = generateRandomFileName(extension);
   const filePath = path.join(tempDir, fileName);
@@ -82,11 +79,7 @@ export function storeFileInTempFolder(
 //   }
 // }
 
-export async function createJSONFile(
-  path: string,
-  fileName: string,
-  dataObject: object,
-) {
+export async function createJSONFile(path: string, fileName: string, dataObject: object) {
   // Write to a file asynchronously
   fs.writeFile(`${path}${fileName}.json`, JSON.stringify(dataObject), (err) => {
     if (err) {
@@ -102,8 +95,8 @@ export function getFileExtension(fileURL: string): string {
   try {
     const { ext } = path.parse(fileURL);
     return ext ? ext.slice(1) : 'xxx'; // removing the dot from the extension
-  } catch (error: any) {
-    console.error('Error extracting file extension:', error.message);
+  } catch (e: unknown) {
+    if (e instanceof Error) console.error('Error extracting file extension:', e.message);
     return 'xxx';
   }
 }
@@ -112,15 +105,15 @@ export async function downloadFile(fileURL: string) {
   const apiService = new ApiService(fileURL);
 
   try {
-    return await apiService.get<any>('', {
+    return await apiService.get<unknown>('', {
       responseType: 'stream',
     });
 
     // return await axios.get(fileURL, {
     //   responseType: 'stream',
     // });
-  } catch (e: any) {
-    Logger.error(e.message);
+  } catch (e: unknown) {
+    if (e instanceof Error) Logger.error(e.message);
     return false;
   }
 }

@@ -17,8 +17,7 @@ export const randomToken = () => {
  * @return {string}
  */
 export const codeGenerator = (length = 6) => {
-  const characters =
-    'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789';
+  const characters = 'ABCDEFGHIGKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxy0123456789';
   let code = '';
   for (let i = 0; i < length; i++) {
     code += characters[Math.floor(Math.random() * characters.length)];
@@ -26,8 +25,7 @@ export const codeGenerator = (length = 6) => {
   return code;
 };
 
-export const nanoCharacters =
-  '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
+export const nanoCharacters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
 
 // const characters = '0123456789';
 // let token = '';

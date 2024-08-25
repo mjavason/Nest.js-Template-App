@@ -10,18 +10,11 @@ export class GenericService<T extends Document> {
     return result;
   }
 
-  async findAll(
-    filter: FilterQuery<T>,
-    pagination?: { page: number; size: number },
-  ) {
+  async findAll(filter: FilterQuery<T>, pagination?: { page: number; size: number }) {
     const { page = 1, size = 10 } = pagination || {};
     const skip = (page - 1) * size;
 
-    const data = await this.model
-      .find(filter)
-      .limit(size)
-      .skip(skip)
-      .sort({ createdAt: 'desc' });
+    const data = await this.model.find(filter).limit(size).skip(skip).sort({ createdAt: 'desc' });
 
     return data;
   }
@@ -37,9 +30,7 @@ export class GenericService<T extends Document> {
     });
 
     if (!result) {
-      throw new BadRequestException(
-        'Unable to update entity, it doesnt exist?',
-      );
+      throw new BadRequestException('Unable to update entity, it doesnt exist?');
     }
 
     return result;
@@ -48,9 +39,7 @@ export class GenericService<T extends Document> {
   async remove(id: string) {
     const result = await this.model.findByIdAndDelete(id);
     if (!result) {
-      throw new BadRequestException(
-        'Unable to delete entity, it doesnt exist?',
-      );
+      throw new BadRequestException('Unable to delete entity, it doesnt exist?');
     }
 
     return result;

@@ -1,8 +1,4 @@
-import {
-  BadRequestException,
-  ForbiddenException,
-  Injectable,
-} from '@nestjs/common';
+import { BadRequestException, ForbiddenException, Injectable } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
 import { UserService } from 'src/user/user.service';
@@ -14,7 +10,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     super({ usernameField: 'email' });
   }
 
-  async validate(email: string, password: string): Promise<any> {
+  async validate(email: string, password: string) {
     const user = await this.userService.findOne({ email });
     if (!user) throw new BadRequestException('Incorrect email or password');
 
@@ -22,9 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
     if (!isMatch) throw new BadRequestException('Incorrect email or password');
 
     if (!user.isEmailVerified)
-      throw new ForbiddenException(
-        'Please verify your email before attempting to login',
-      );
+      throw new ForbiddenException('Please verify your email before attempting to login');
 
     return user;
   }

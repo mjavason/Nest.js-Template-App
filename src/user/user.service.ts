@@ -40,8 +40,7 @@ export class UserService extends GenericService<IUserDocument> {
 
       return {
         data,
-        message:
-          'Update successful, verification mail has been sent to your new email address',
+        message: 'Update successful, verification mail has been sent to your new email address',
       };
     }
 

@@ -14,8 +14,7 @@ export class SendMailDTO {
   title: string;
 
   @ApiProperty({
-    example:
-      'Hello fellow Human, this is a simple mail test, do not be alarmed',
+    example: 'Hello fellow Human, this is a simple mail test, do not be alarmed',
   })
   @IsString()
   body: string;

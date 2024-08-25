@@ -52,11 +52,7 @@ export class MailService {
     return true;
   }
 
-  async sendMailVerificationEmail(
-    email: string,
-    fullName: string,
-    link: string,
-  ) {
+  async sendMailVerificationEmail(email: string, fullName: string, link: string) {
     // Load the email template
     const templatePath = 'src/mail/templates/verify_mail.html';
 
@@ -120,11 +116,7 @@ export class MailService {
   //   }
   // }
 
-  private sendMail = async (
-    recipientEmail: string,
-    mailHtmlBody: string,
-    mailSubject: string,
-  ) => {
+  private sendMail = async (recipientEmail: string, mailHtmlBody: string, mailSubject: string) => {
     // This is where the actual email message is built. Things like CC, recipients, attachments, and so on are configured here.
     return await transporter.sendMail({
       from: `Support <${this.config.get('mail.address')}>`,
@@ -143,8 +135,8 @@ export class MailService {
       // Compile the template
       const compiledTemplate = Handlebars.compile(emailTemplate);
       return compiledTemplate(data);
-    } catch (e: any) {
-      Logger.error('Error compiling template', e.message);
+    } catch (e: unknown) {
+      if (e instanceof Error) Logger.error('Error compiling template', e.message);
       console.log(e);
       return false;
     }

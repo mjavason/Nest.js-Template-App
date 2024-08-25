@@ -6,9 +6,7 @@ import { Bucket, bucketSchema } from './bucket.schema';
 
 @Global()
 @Module({
-  imports: [
-    MongooseModule.forFeature([{ name: Bucket.name, schema: bucketSchema }]),
-  ],
+  imports: [MongooseModule.forFeature([{ name: Bucket.name, schema: bucketSchema }])],
   controllers: [BucketController],
   providers: [BucketService],
   exports: [BucketService],

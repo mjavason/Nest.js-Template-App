@@ -18,10 +18,7 @@ import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { LoginDTO, RegisterWithAvatarDTO } from './dto';
 import { Auth } from 'src/common/decorators/auth.decorator';
 import { Response } from 'express';
-import {
-  clearCookieConfig,
-  cookieConfig,
-} from 'src/common/configs/cookie.config';
+import { clearCookieConfig, cookieConfig } from 'src/common/configs/cookie.config';
 import { UserService } from 'src/user/user.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { uploadImages } from 'src/common/configs/multer.config';
@@ -49,18 +46,13 @@ export class AuthController {
   @ApiOperation({ summary: 'Sign up' })
   @UseInterceptors(FileInterceptor('avatar', uploadImages))
   @ApiConsumes('multipart/form-data')
-  async register(
-    @UploadedFile() avatar: MulterFile,
-    @Body() body: RegisterWithAvatarDTO,
-  ) {
+  async register(@UploadedFile() avatar: MulterFile, @Body() body: RegisterWithAvatarDTO) {
     const emailExists = await this.userService.findOne({ email: body.email });
     if (emailExists) throw new ConflictException('Email already exists');
 
     // if an image was uploaded, set the avatarURL as its path
     if (avatar) {
-      const imageUpload = await this.bucketService.uploadToCloudinary(
-        avatar.path,
-      );
+      const imageUpload = await this.bucketService.uploadToCloudinary(avatar.path);
       body.avatarURL = imageUpload.url;
     }
 

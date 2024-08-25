@@ -1,13 +1,17 @@
-import { Inject, Injectable } from '@nestjs/common';
+import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
 import { PassportStrategy } from '@nestjs/passport';
 import { ExtractJwt, Strategy } from 'passport-jwt';
 import { Request } from 'express';
 import { IDecodedToken } from './auth.interface';
+import { UserService } from 'src/user/user.service';
 
 @Injectable()
 export class JwtStrategy extends PassportStrategy(Strategy) {
-  constructor(@Inject(ConfigService) private config: ConfigService) {
+  constructor(
+    @Inject(ConfigService) private config: ConfigService,
+    private readonly userService: UserService,
+  ) {
     super({
       jwtFromRequest: ExtractJwt.fromExtractors([
         (req: Request) => {
@@ -21,6 +25,10 @@ export class JwtStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(payload: IDecodedToken) {
-    return { id: payload.sub };
+    // return { id: payload.sub };
+    const user = await this.userService.findOne({ _id: payload.sub });
+    if (!user) throw new UnauthorizedException('User account does not exist');
+
+    return user;
   }
 }

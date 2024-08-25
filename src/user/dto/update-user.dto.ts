@@ -1,75 +1,65 @@
-import { ApiProperty } from '@nestjs/swagger';
-import {
-  IsString,
-  IsEmail,
-  IsOptional,
-  IsUrl,
-  IsStrongPassword,
-} from 'class-validator';
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsString, IsEmail, IsOptional, IsUrl, IsStrongPassword } from 'class-validator';
 import { Trim } from 'src/common/decorators/util.decorator';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class UpdateUserDTO {
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'First name of the user',
-    required: false,
   })
   @IsOptional()
   @IsString()
   @Trim()
-  firstName: string;
+  firstName?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Last name of the user',
-    required: false,
   })
   @IsOptional()
   @IsString()
   @Trim()
-  lastName: string;
+  lastName?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Phone number of the user',
-    required: false,
   })
   @IsOptional()
   @IsString()
   @Trim()
   phoneNumber?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Email address of the user',
-    required: false,
   })
   @IsOptional()
   @IsEmail()
   @Trim()
-  email: string;
+  email?: string;
 
-  @ApiProperty({
+  @ApiPropertyOptional({
     description: 'Password for the user account',
     minLength: 5,
-    required: false,
   })
   @IsOptional()
   @IsString()
   @IsStrongPassword()
   @Trim()
-  password: string;
+  password?: string;
 
-  @ApiProperty({
-    required: false,
-  })
+  @ApiPropertyOptional()
   @IsOptional()
   @IsString()
   @IsUrl()
   @Trim()
-  avatarURL: string;
+  avatarURL?: string;
+}
 
+export class UpdateUserDTOWithAvatar extends UpdateUserDTO {
   @ApiProperty({
     type: 'string',
     format: 'binary',
     required: false,
     description: 'Desired avatar image. Only image types accepted',
   })
-  avatar: any;
+  avatar: MulterFile;
 }

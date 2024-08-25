@@ -9,6 +9,7 @@ import {
   IsUrl,
 } from 'class-validator';
 import { ToLowerCase, Trim } from 'src/common/decorators/util.decorator';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class RegisterDTO {
   @ApiProperty({ description: 'First name of the user', example: 'John' })
@@ -80,7 +81,7 @@ export class RegisterWithAvatarDTO extends RegisterDTO {
     required: false,
     description: 'Desired avatar image. Only image types accepted',
   })
-  avatar: any;
+  avatar: MulterFile;
 }
 export class LoginDTO {
   @ApiProperty({ example: 'testerzero@gmail.com' })

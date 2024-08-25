@@ -11,8 +11,8 @@ export async function renderMailTemplate(templatePath: string, data: object) {
     // Compile the template
     const compiledTemplate = handlebars.compile(emailTemplate);
     return compiledTemplate(data);
-  } catch (e: any) {
-    Logger.error('Error compiling template', e.message);
+  } catch (e: unknown) {
+    if (e instanceof Error) Logger.error('Error compiling template', e.message);
     // console.log(e);
     return false;
   }

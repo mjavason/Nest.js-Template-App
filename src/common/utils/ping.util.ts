@@ -6,12 +6,10 @@ export async function pingSelf() {
   try {
     const { data } = await axios.get(<string>`${BASE_URL}`);
 
-    Logger.log(
-      `Server pinged successfully: ${data.message}! Status code is ${data.statusCode}`,
-    );
+    Logger.log(`Server pinged successfully: ${data.message}`);
     return true;
-  } catch (e: any) {
-    Logger.log(`this the error message: ${e.message}`);
+  } catch (e: unknown) {
+    if (e instanceof Error) Logger.log(`this the error message: ${e.message}`);
     return;
   }
 }

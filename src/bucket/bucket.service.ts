@@ -12,11 +12,7 @@ export class BucketService extends GenericService<IBucketDocument> {
     super(bucketModel); // Pass the model to the GenericService constructor
   }
 
-  async uploadToCloudinary(
-    path: string,
-    folder: string = 'Uploads',
-    author: string = '001x',
-  ) {
+  async uploadToCloudinary(path: string, folder: string = 'Uploads', author: string = '001x') {
     const imageUpload = await cloudinaryInstance.upload(path, {
       folder,
       // resource_type: 'raw',

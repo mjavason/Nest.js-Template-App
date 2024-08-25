@@ -12,13 +12,11 @@ import { MESSAGES } from '../configs/constants';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: any, host: ArgumentsHost) {
+  catch(exception: unknown, host: ArgumentsHost) {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
     const status =
-      exception instanceof HttpException
-        ? exception.getStatus()
-        : HttpStatus.INTERNAL_SERVER_ERROR;
+      exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     let message = MESSAGES.INTERNAL_ERROR;
 
     if (exception instanceof HttpException) {
@@ -29,10 +27,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
         ? errorResponse.message[0]
         : errorResponse.message;
 
-      if (
-        exception instanceof ForbiddenException &&
-        errorResponse.message === 'forbidden'
-      ) {
+      if (exception instanceof ForbiddenException && errorResponse.message === 'forbidden') {
         message = MESSAGES.USER_UNAUTHORIZED;
       } else if (exception instanceof UnauthorizedException) {
         message = MESSAGES.USER_NOT_LOGGED_IN;
@@ -43,9 +38,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
       return response.status(status).json({
         success: false,
         message,
-        errors: Array.isArray(errorResponse.message)
-          ? errorResponse.message
-          : undefined,
+        errors: Array.isArray(errorResponse.message) ? errorResponse.message : undefined,
       });
     }
 

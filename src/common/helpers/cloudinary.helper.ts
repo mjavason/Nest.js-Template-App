@@ -1,9 +1,6 @@
 import { cloudinaryInstance } from '../configs';
 
-export async function uploadToCloudinary(
-  path: string,
-  folder: string = 'Uploads',
-) {
+export async function uploadToCloudinary(path: string, folder: string = 'Uploads') {
   return await cloudinaryInstance.upload(path, {
     folder,
     // resource_type: 'raw',

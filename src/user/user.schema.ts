@@ -75,9 +75,7 @@ userSchema.methods.comparePassword = async function compare(password: string) {
   return bcrypt.compare(password, this.password);
 };
 
-userSchema.statics.hashPassword = async function hashPassword(
-  password: string,
-) {
+userSchema.statics.hashPassword = async function hashPassword(password: string) {
   const saltOrRounds = 10;
   const hash = await bcrypt.hash(password, saltOrRounds);
   return hash;
@@ -91,9 +89,7 @@ userSchema.pre('save', async function preSave(next) {
   next();
 });
 
-userSchema.statics.userExists = async function duplicateIdentity(
-  email: string,
-) {
+userSchema.statics.userExists = async function duplicateIdentity(email: string) {
   const user = await userModel.findOne({
     email,
   });
