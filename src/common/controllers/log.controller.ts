@@ -11,7 +11,7 @@ export class LogsController {
   private readonly logFolderPath: string = path.join(__dirname, '..', 'logs');
 
   @Get('download')
-  @ApiOperation({ summary: 'Download log folder as a ZIP file' })
+  @ApiOperation({ summary: 'Download server logs as a ZIP file' })
   @ApiResponse({
     status: 200,
     description: 'The logs have been successfully downloaded.',

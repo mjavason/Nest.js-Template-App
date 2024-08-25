@@ -22,7 +22,7 @@ export class BucketController {
   constructor(private readonly bucketService: BucketService) {}
 
   @Post('upload')
-  @ApiOperation({ summary: 'Upload a file to the platform bucket' })
+  @ApiOperation({ summary: 'Upload a file to the platform bucket and cloudinary' })
   @UseInterceptors(FileInterceptor('uploadedFile', upload))
   @ApiConsumes('multipart/form-data')
   @ApiBody({ type: FileUploadDTO })
