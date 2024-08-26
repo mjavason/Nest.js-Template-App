@@ -49,7 +49,7 @@ export const JWT_SECRET = process.env.JWT_SECRET || 'xxx';
 export const API_PREFIX = 'api/v1';
 export const NODE_ENV = process.env.NODE_ENV || 'development';
 export const BASE_URL = process.env.BASE_URL || `http://locahost:${PORT}`;
-export const FRONTEND_URL = process.env.FRONTEND_URL || 'https://webgoldlimited.com';
+export const FRONTEND_URL = process.env.FRONTEND_URL || 'https://startup.com';
 
 export const MESSAGES = {
   FETCHED: 'Resource retrieved successfully',
