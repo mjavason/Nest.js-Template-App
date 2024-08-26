@@ -58,7 +58,7 @@ export class MailService {
 
     // Replace placeholders with actual data
     const data = {
-      title: `${this.config.get('app.name')} Mail Verification`,
+      title: `Email Verification`,
       fullName,
       link,
     };
@@ -78,7 +78,7 @@ export class MailService {
 
     // Replace placeholders with actual data
     const data = {
-      title: `${this.config.get('app.name')} Forgot Password`,
+      title: `Forgot Password`,
       fullName,
       link,
     };
