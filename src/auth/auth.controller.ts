@@ -25,17 +25,16 @@ import { uploadImages } from 'src/common/configs/multer.config';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { codeGenerator, generateRandomAvatar } from 'src/common/utils';
 import { IDecodedToken } from './auth.interface';
-import { ConfigService } from '@nestjs/config';
 import { JwtService } from '@nestjs/jwt';
 import bcrypt from 'bcrypt';
 import { BucketService } from 'src/bucket/bucket.service';
+import { FRONTEND_URL } from 'src/common/configs';
 
 @Controller('auth')
 @ApiTags('Auth')
 // @SwaggerResponses()
 export class AuthController {
   constructor(
-    private config: ConfigService,
     private authService: AuthService,
     private readonly userService: UserService,
     private readonly jwtService: JwtService,
@@ -64,13 +63,20 @@ export class AuthController {
 
   @Get('verify-email/:token')
   @ApiOperation({ summary: 'Verify user email address' })
-  async verifyEmail(@Param('token') token) {
-    const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
-    await this.userService.update(payload.sub, {
-      isEmailVerified: true,
-    });
+  async verifyEmail(@Param('token') token: string, @Res() res: Response) {
+    try {
+      const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
+      await this.userService.update(payload.sub, {
+        isEmailVerified: true,
+      });
 
-    return { message: 'Email verified successfully' };
+      // Redirect to the frontend after successful verification
+      const redirectUrl = `${FRONTEND_URL}/login`;
+      return res.redirect(redirectUrl);
+    } catch (error) {
+      // Handle any errors, e.g., invalid token
+      return res.status(400).send('Invalid or expired token, try logging in to receive a new one');
+    }
   }
 
   @Post('forgot-password/:email')
@@ -81,7 +87,7 @@ export class AuthController {
 
   @Get('reset-password/:token')
   @ApiOperation({ summary: 'Reset user password' })
-  async resetPassword(@Param('token') token) {
+  async resetPassword(@Param('token') token, @Res() res: Response) {
     const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
     const randomToken = codeGenerator(7);
     const password = await bcrypt.hash(randomToken, 10);
@@ -89,9 +95,11 @@ export class AuthController {
       password,
     });
 
-    return {
-      message: `Password reset successfully. ${randomToken} is your new password. Ensure to change it once you login`,
-    };
+    return res.status(400).send(
+      `Password reset successfully. <strong>${randomToken}</strong> is your new password. Ensure to change it once you login.
+      <br>
+      Click <a href=${FRONTEND_URL}>here</a> to go back to the home page`,
+    );
   }
 
   @Post('login')
