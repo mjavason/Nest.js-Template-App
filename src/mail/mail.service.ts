@@ -24,11 +24,7 @@ export class MailService {
     if (!compiledTemplate) return false;
 
     // Send the email
-    await this.sendMail(
-      mailDetails.email,
-      compiledTemplate,
-      `${this.config.get('app.name')}  Welcome`,
-    );
+    await this.sendMail(mailDetails.email, compiledTemplate, `Welcome`);
     return true;
   }
 
