@@ -33,7 +33,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
       );
 
       throw new ForbiddenException(
-        'Please verify your email before attempting to login. A verification mail has been set to your email address',
+        'Please verify your email before attempting to login. A verification mail has been sent to your email address. If not in inbox, check spam.',
       );
     }
 
