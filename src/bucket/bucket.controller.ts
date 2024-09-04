@@ -1,8 +1,8 @@
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { BucketService } from './bucket.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { FileUploadDTO } from 'src/common/dtos/file.dto';
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
+import { FileUploadDTO, MultiFileUploadDTO } from 'src/common/dtos/file.dto';
 import { IUserDocument } from 'src/user/user.interface';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { upload } from 'src/common/configs';
@@ -13,6 +13,7 @@ import {
   Param,
   Post,
   UploadedFile,
+  UploadedFiles,
   UseInterceptors,
 } from '@nestjs/common';
 
@@ -31,6 +32,32 @@ export class BucketController {
     if (!uploadedFile) throw new BadRequestException('No file uploaded');
 
     return await this.bucketService.uploadToCloudinary(uploadedFile.path, undefined, auth.id);
+  }
+
+  @Post('upload-multiple')
+  @ApiOperation({ summary: 'Upload a group of files', description: 'Maximum of 10 at once' })
+  @UseInterceptors(AnyFilesInterceptor(upload))
+  @ApiConsumes('multipart/form-data')
+  @ApiBody({ type: MultiFileUploadDTO })
+  @Auth()
+  async create(@UploadedFiles() files: MulterFile[], @CurrentUser() auth: IUserDocument) {
+    const uploadedFiles = files.filter((file) => file.fieldname === 'uploadedFiles');
+
+    if (uploadedFiles.length < 1) throw new BadRequestException('No files uploaded');
+
+    // Upload all files concurrently and wait for them to finish
+    const uploadedFilesArray = await Promise.all(
+      uploadedFiles.map(async (file) => {
+        const fileUploaded = await this.bucketService.uploadToCloudinary(
+          file.path,
+          auth.id, // folder
+          auth.id, // author
+        );
+        return fileUploaded;
+      }),
+    );
+
+    return uploadedFilesArray;
   }
 
   @Delete('delete-upload/:url')

@@ -7,7 +7,7 @@ import { uploadImages } from 'src/common/configs';
 import { BucketService } from 'src/bucket/bucket.service';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { IUser, IUserDocument, Roles, UserType } from './user.interface';
+import { IUser, IUserDocument } from './user.interface';
 
 @Controller('user')
 @ApiTags('User')

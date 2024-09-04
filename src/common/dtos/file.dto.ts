@@ -10,3 +10,15 @@ export class FileUploadDTO {
   })
   uploadedFile: MulterFile;
 }
+
+export class MultiFileUploadDTO {
+  @ApiProperty({
+    type: 'array',
+    items: {
+      type: 'string',
+      format: 'binary',
+    },
+    description: 'Desired files to be uploaded',
+  })
+  uploadedFiles: MulterFile[];
+}

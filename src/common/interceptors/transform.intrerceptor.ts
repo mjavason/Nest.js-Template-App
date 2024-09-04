@@ -14,6 +14,7 @@ export class TransformInterceptor<T> implements NestInterceptor<T, SuccessRespon
           success: true,
           message: MESSAGES.SUCCESSFUL,
           data: undefined,
+          pagination: undefined,
         };
 
         if (typeof data === 'object' && data !== null) {
@@ -24,6 +25,10 @@ export class TransformInterceptor<T> implements NestInterceptor<T, SuccessRespon
           if ('success' in data) {
             response.success = data.success;
             data.success = undefined;
+          }
+          if ('pagination' in data) {
+            response.pagination = data.pagination;
+            data.pagination = undefined;
           }
           if ('data' in data) {
             response.data = data.data;

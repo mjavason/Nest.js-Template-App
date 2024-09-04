@@ -1,4 +1,5 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { PaginationData } from '../interfaces';
 
 export class ErrorResponseDTO {
   @ApiProperty()
@@ -20,4 +21,7 @@ export class SuccessResponseDTO {
 
   @ApiProperty({ required: false })
   data?: unknown;
+
+  @ApiProperty({ required: false })
+  pagination?: PaginationData;
 }

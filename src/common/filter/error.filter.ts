@@ -5,6 +5,7 @@ import {
   ForbiddenException,
   HttpException,
   HttpStatus,
+  Logger,
   UnauthorizedException,
 } from '@nestjs/common';
 import { Response } from 'express';
@@ -18,6 +19,7 @@ export class HttpExceptionFilter implements ExceptionFilter {
     const status =
       exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
     let message = MESSAGES.INTERNAL_ERROR;
+    Logger.error(exception);
 
     if (exception instanceof HttpException) {
       const errorResponse = exception.getResponse() as {

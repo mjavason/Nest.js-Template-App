@@ -4,6 +4,7 @@ import {
   Controller,
   Delete,
   Get,
+  Logger,
   Param,
   Post,
   Req,
@@ -75,6 +76,7 @@ export class AuthController {
       return res.redirect(redirectUrl);
     } catch (error) {
       // Handle any errors, e.g., invalid token
+      Logger.error(error.message);
       return res.status(400).send('Invalid or expired token, try logging in to receive a new one');
     }
   }
