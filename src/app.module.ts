@@ -15,6 +15,7 @@ import {
   databaseConfig,
   mailConfig,
 } from './common/configs/constants';
+import { paginatePlugin, searchPlugin } from './common/db-plugins';
 
 // import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
 // import { APP_INTERCEPTOR } from '@nestjs/core';
@@ -37,6 +38,8 @@ import {
         uri: config.get<string>('db.url'),
         connectionFactory: (connection) => {
           connection.plugin(mongooseAutoPopulate);
+          connection.plugin(paginatePlugin);
+          connection.plugin(searchPlugin);
           Logger.log('Database connected successfully');
           return connection;
         },
