@@ -12,7 +12,7 @@ import { MailService } from 'src/mail/mail.service';
 @Injectable()
 export class UserService extends GenericService<IUserDocument> {
   constructor(
-    @InjectModel(User.name) userModel: Model<IUserDocument>,
+    @InjectModel(User.name) private readonly userModel: Model<IUserDocument>,
     private readonly config: ConfigService,
     private readonly mailService: MailService,
     private readonly jwtService: JwtService,
