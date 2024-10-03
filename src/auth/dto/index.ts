@@ -83,6 +83,7 @@ export class RegisterWithAvatarDTO extends RegisterDTO {
   })
   avatar: MulterFile;
 }
+
 export class LoginDTO {
   @ApiProperty({ example: 'testerzero@gmail.com' })
   @IsEmail()
@@ -92,15 +93,7 @@ export class LoginDTO {
 
   @ApiProperty({
     example: 'StrongPassword@123',
-    description:
-      'Minimum of 8 characters, At least one uppercase letter (e.g., A-Z), At least one lowercase letter (e.g., a-z), At least one numeric digit (e.g., 0-9), At least one special character (e.g., !@#$%^&*).',
-  })
-  @IsNotEmpty()
-  @IsString()
-  @MinLength(5)
-  @IsStrongPassword(undefined, {
-    message:
-      'Password must be strong. It must be longer than 4 characters, include uppercase and lowercase letters, numbers, and symbols.',
+    description: 'User password',
   })
   @Trim()
   password: string;

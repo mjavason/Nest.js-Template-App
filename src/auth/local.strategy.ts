@@ -18,6 +18,7 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
   }
 
   async validate(email: string, password: string) {
+    email = email.toLowerCase();
     const user = await this.userService.findOne({ email });
     if (!user) throw new BadRequestException('Incorrect email or password');
 

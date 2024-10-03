@@ -84,6 +84,7 @@ export class AuthController {
   @Post('forgot-password/:email')
   @ApiOperation({ summary: 'Request password reset' })
   async forgotPassword(@Param('email') email: string) {
+    email = email.toLowerCase();
     return await this.authService.requestForgotPassword(email);
   }
 
