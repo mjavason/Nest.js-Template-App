@@ -95,7 +95,13 @@ export class LoginDTO {
     description:
       'Minimum of 8 characters, At least one uppercase letter (e.g., A-Z), At least one lowercase letter (e.g., a-z), At least one numeric digit (e.g., 0-9), At least one special character (e.g., !@#$%^&*).',
   })
-  @IsStrongPassword()
+  @IsNotEmpty()
+  @IsString()
+  @MinLength(5)
+  @IsStrongPassword(undefined, {
+    message:
+      'Password must be strong. It must be longer than 4 characters, include uppercase and lowercase letters, numbers, and symbols.',
+  })
   @Trim()
   password: string;
 }
