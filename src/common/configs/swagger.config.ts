@@ -4,10 +4,13 @@ import { DocumentBuilder, SwaggerModule } from '@nestjs/swagger';
 export function setupSwagger(app: INestApplication): void {
   const swaggerConfig = new DocumentBuilder()
     .setTitle('Startup')
-    .setDescription('Nest.js template app with cookie auth implemented.')
+    .setDescription('Nest.js app')
     .setVersion('1.0')
+    // .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
-  SwaggerModule.setup('docs', app, document);
+  SwaggerModule.setup('docs', app, document, {
+    /*swaggerOptions: { persistAuthorization: true } */
+  });
 }
