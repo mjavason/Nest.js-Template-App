@@ -91,18 +91,26 @@ export class AuthController {
   @Get('reset-password/:token')
   @ApiOperation({ summary: 'Reset user password' })
   async resetPassword(@Param('token') token, @Res() res: Response) {
-    const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
-    const randomToken = codeGenerator(7);
-    const password = await bcrypt.hash(randomToken, 10);
-    await this.userService.update(payload.sub, {
-      password,
-    });
+    try {
+      const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
+      const randomToken = codeGenerator(7);
+      const password = await bcrypt.hash(randomToken, 10);
+      await this.userService.update(payload.sub, {
+        password,
+      });
 
-    return res.status(400).send(
-      `Password reset successfully. <strong>${randomToken}</strong> is your new password. Ensure to change it once you login.
-      <br>
-      Click <a href=${FRONTEND_URL}>here</a> to go back to the home page`,
-    );
+      return res.status(200).send(`
+        <div style="font-family: Arial, sans-serif; color: #333; text-align: center; padding-top: 20px; font-size: 1rem;">
+          <p style="font-size: 1.2rem;">Password reset successfully.</p>
+          <p style="font-size: 1.1rem;"><strong>${randomToken}</strong> is your new password. Please make sure to change it once you log in.</p>
+          <br />
+          <p style="font-size: 1rem;">Click <a href="${FRONTEND_URL}" style="color: #007bff; text-decoration: none;">here</a> to return to the home page.</p>
+        </div>
+      `);
+    } catch (e: any) {
+      Logger.error(e);
+      return res.status(400).send('Forgot password token expired, try again');
+    }
   }
 
   @Post('login')
