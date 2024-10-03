@@ -13,7 +13,7 @@ export class BucketService extends GenericService<IBucketDocument> {
   }
 
   async uploadToCloudinary(path: string, folder: string = 'Uploads', author: string = '001x') {
-    const imageUpload = await cloudinaryInstance.upload(path, {
+    const imageUpload = await cloudinaryInstance.uploader.upload(path, {
       folder,
       // resource_type: 'raw',
     });
@@ -30,7 +30,7 @@ export class BucketService extends GenericService<IBucketDocument> {
     const imageUploaded = await this.findOne({ url, author });
     if (!imageUploaded) throw new NotFoundException('Upload not found');
 
-    await cloudinaryInstance.destroy(imageUploaded.metaData.public_id);
+    await cloudinaryInstance.uploader.destroy(imageUploaded.metaData.public_id);
 
     return await this.remove(imageUploaded.id);
   }
