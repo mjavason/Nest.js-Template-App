@@ -67,9 +67,12 @@ export class AuthController {
   async verifyEmail(@Param('token') token: string, @Res() res: Response) {
     try {
       const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
-      await this.userService.update(payload.sub, {
-        isEmailVerified: true,
-      });
+      await this.userService.update(
+        { _id: payload.sub },
+        {
+          isEmailVerified: true,
+        },
+      );
 
       // Redirect to the frontend after successful verification
       const redirectUrl = `${FRONTEND_URL}/login`;
@@ -95,9 +98,12 @@ export class AuthController {
       const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
       const randomToken = codeGenerator(7);
       const password = await bcrypt.hash(randomToken, 10);
-      await this.userService.update(payload.sub, {
-        password,
-      });
+      await this.userService.update(
+        { _id: payload.sub },
+        {
+          password,
+        },
+      );
 
       return res.status(200).send(`
         <div style="font-family: Arial, sans-serif; color: #333; text-align: center; padding-top: 20px; font-size: 1rem;">

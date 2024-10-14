@@ -1,53 +1,55 @@
-import { BadRequestException, Injectable } from '@nestjs/common';
+import { Injectable } from '@nestjs/common';
 import { FilterQuery, Document } from 'mongoose';
 import { PaginateModel } from '../interfaces';
 
 @Injectable()
 export class GenericService<T extends Document> {
   private model: PaginateModel<T>;
+
   constructor(private readonly _model: any) {
     this.model = _model;
   }
 
   async create(createDto: Partial<T>) {
-    const result = await this.model.create(createDto);
-    return result;
+    return await this.model.create(createDto);
   }
 
-  async findAll(filter: FilterQuery<T>, pagination?: { page: number; size: number }) {
-    const { page = 1, size = 10 } = pagination || {};
+  async findAll(filter: FilterQuery<T> = {}) {
+    const { pagination_page = 1, pagination_size = 10 } = filter;
 
-    const data = await this.model.paginate(filter, { limit: size, page: page });
-    return data;
+    delete filter.pagination_page;
+    delete filter.pagination_size;
+
+    return await this.model.paginate(filter, {
+      limit: pagination_size,
+      page: pagination_page,
+    });
   }
 
-  async findAllNoPagination(filter: FilterQuery<T>) {
+  async findAllNoPagination(filter: FilterQuery<T> = {}) {
     return await this.model.find(filter).sort({ createdAt: 'desc' });
   }
 
   async findOne(filter: FilterQuery<T>) {
-    const data = await this.model.findOne(filter);
-    return data;
+    return await this.model.findOne(filter);
   }
 
-  async update(id: string, updateDto: Partial<T>) {
-    const result = await this.model.findByIdAndUpdate(id, updateDto, {
+  async update(filter: FilterQuery<T>, updateDto: Partial<T>): Promise<T | null> {
+    return await this.model.findOneAndUpdate(filter, updateDto, {
       new: true,
+      runValidators: true,
     });
-
-    if (!result) {
-      throw new BadRequestException('Unable to update entity, it doesnt exist?');
-    }
-
-    return result;
   }
 
   async remove(id: string) {
-    const result = await this.model.findByIdAndDelete(id);
-    if (!result) {
-      throw new BadRequestException('Unable to delete entity, it doesnt exist?');
-    }
+    return await this.model.findByIdAndDelete(id);
+  }
 
-    return result;
+  async count(filter: FilterQuery<T> = {}) {
+    return await this.model.countDocuments(filter);
+  }
+
+  async exists(filter: FilterQuery<T>) {
+    return await this.model.exists(filter);
   }
 }

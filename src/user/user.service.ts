@@ -21,7 +21,7 @@ export class UserService extends GenericService<IUserDocument> {
   }
 
   async updateProfile(id: string, updates: UpdateUserDTO) {
-    const data = await this.update(id, updates);
+    const data = await this.update({ _id: id }, updates);
 
     if (updates.email || updates.password) {
       const verificationToken = await this.jwtService.signAsync({
