@@ -25,7 +25,10 @@ export class ApiService {
 
       return response.data;
     } catch (error) {
-      console.log(error);
+      // console.log(error);
+      console.log(error?.response?.data);
+      // return error?.response?.data;
+
       return <T>false;
     }
   }
