@@ -1,4 +1,6 @@
 import { ApiProperty } from '@nestjs/swagger';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { ToLowerCase, Trim } from 'src/common/decorators/util.decorator';
 import {
   IsString,
   IsEmail,
@@ -8,21 +10,13 @@ import {
   IsOptional,
   IsUrl,
 } from 'class-validator';
-import { ToLowerCase, Trim } from 'src/common/decorators/util.decorator';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class RegisterDTO {
   @ApiProperty({ description: 'First name of the user', example: 'John' })
   @IsNotEmpty()
   @IsString()
   @Trim()
-  firstName: string;
-
-  @ApiProperty({ description: 'Last name of the user', example: 'Doe' })
-  @IsNotEmpty()
-  @IsString()
-  @Trim()
-  lastName: string;
+  fullName: string;
 
   @ApiProperty({
     description: 'Password for the user account',
@@ -48,19 +42,20 @@ export class RegisterDTO {
 
   // @ApiProperty({
   //   description: 'Type of user',
-  //   enum: UserType,
-  //   example: UserType.USER,
+  //   enum: USER_TYPES,
+  //   example: USER_TYPES.USER,
   // })
-  // @IsEnum(UserType)
-  // userType: UserType;
+  // @IsEnum(USER_TYPES)
+  // USER_TYPES: USER_TYPES;
 
-  // @ApiProperty({
+  // @ApiPropertyOptional({
   //   description: 'Role of the user',
-  //   enum: Roles,
-  //   example: Roles.BUSINESS_OWNER,
+  //   enum: USER_ROLES,
+  //   example: USER_ROLES.BUSINESS_OWNER,
   // })
-  // @IsEnum(Roles)
-  // role: Roles;
+  // @IsOptional()
+  // @IsEnum(USER_ROLES)
+  // role: USER_ROLES;
 
   @ApiProperty({
     required: false,
@@ -72,6 +67,29 @@ export class RegisterDTO {
   @Trim()
   @IsUrl()
   avatarURL: string;
+
+  // @ApiProperty({
+  //   required: false,
+  //   example: '3 Nnamani Nwene street',
+  // })
+  // @IsOptional()
+  // @IsString()
+  // @Trim()
+  // address: string;
+
+  // @ApiProperty({
+  //   description: 'Longitude of the user’s location',
+  //   example: 12.345678,
+  // })
+  // @IsNumber()
+  // mapLongitude: number;
+
+  // @ApiProperty({
+  //   description: 'Latitude of the user’s location',
+  //   example: 98.765432,
+  // })
+  // @IsNumber()
+  // mapLatitude: number;
 }
 
 export class RegisterWithAvatarDTO extends RegisterDTO {
@@ -97,6 +115,27 @@ export class LoginDTO {
   })
   @Trim()
   password: string;
+}
+
+export class NewPasswordDto {
+  @ApiProperty({ example: 'testerzero@gmail.com' })
+  @IsEmail()
+  @ToLowerCase()
+  @Trim()
+  email: string;
+
+  @ApiProperty({ example: '2134' })
+  @IsString()
+  @Trim()
+  token: string;
+
+  @ApiProperty({
+    example: 'StrongPassword@123',
+    description: 'User password',
+  })
+  @IsString()
+  @Trim()
+  newPassword: string;
 }
 
 export * from './create-auth.dto';

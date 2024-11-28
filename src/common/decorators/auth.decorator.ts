@@ -1,6 +1,6 @@
-import { JwtAuthGuard } from 'src/auth/jwt.guard';
-import { Roles, UserType } from 'src/user/user.interface';
-import { RolesGuard } from 'src/auth/role.guard';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+import { USER_ROLES, USER_TYPES } from 'src/user/user.interface';
+import { RolesGuard } from 'src/auth/guard/role.guard';
 import {
   ApiBadRequestResponse,
   ApiBearerAuth,
@@ -15,11 +15,11 @@ import {
   createParamDecorator,
 } from '@nestjs/common';
 
-export function Auth(roles: Roles[] = [], type?: UserType): MethodDecorator {
+export function Auth(USER_ROLES: USER_ROLES[] = [], type?: USER_TYPES): MethodDecorator {
   return applyDecorators(
     UseGuards(JwtAuthGuard),
-    SetMetadata('roles', roles),
-    SetMetadata('userType', type),
+    SetMetadata('USER_ROLES', USER_ROLES),
+    SetMetadata('USER_TYPES', USER_TYPES),
     UseGuards(RolesGuard),
     ApiBadRequestResponse({
       description: 'Bad request',
@@ -28,7 +28,7 @@ export function Auth(roles: Roles[] = [], type?: UserType): MethodDecorator {
       description: 'Unauthorized',
     }),
     ApiForbiddenResponse({ description: 'forbidden' }),
-    ApiBearerAuth('jwt'),
+    ApiBearerAuth(),
   );
 }
 

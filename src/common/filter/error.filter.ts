@@ -13,44 +13,69 @@ import {
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
-  catch(exception: unknown, host: ArgumentsHost) {
+  private readonly logger = new Logger(HttpExceptionFilter.name);
+
+  catch(exception: unknown, host: ArgumentsHost): void {
     const context = host.switchToHttp();
     const response = context.getResponse<Response>();
-    const status =
-      exception instanceof HttpException ? exception.getStatus() : HttpStatus.INTERNAL_SERVER_ERROR;
-    let message = MESSAGES.INTERNAL_ERROR;
-    Logger.error(exception);
+    const status = this.getStatus(exception);
+    const message = this.getMessage(exception, status);
 
+    // Enhanced logging with stack trace in development
+    if (process.env.NODE_ENV !== 'production') {
+      this.logger.error(exception instanceof Error ? exception.stack : exception);
+    } else {
+      this.logger.error(exception);
+    }
+    this.logger.error(message);
+
+    response.status(status).json({
+      success: false,
+      message,
+      ...(exception instanceof HttpException &&
+        Array.isArray(exception.getResponse()['message'] as unknown) && {
+          errors: exception.getResponse()['message'],
+        }),
+    });
+  }
+
+  /**
+   * Determine the HTTP status for the response.
+   */
+  private getStatus(exception: unknown): number {
     if (exception instanceof HttpException) {
-      const errorResponse = exception.getResponse() as {
-        message: string[] | string;
-      };
+      return exception.getStatus();
+    }
+    return HttpStatus.INTERNAL_SERVER_ERROR;
+  }
+
+  /**
+   * Extract or map the appropriate error message.
+   */
+  private getMessage(exception: unknown, status: number): string {
+    if (exception instanceof HttpException) {
+      const errorResponse = exception.getResponse() as { message: string[] | string };
       const error = Array.isArray(errorResponse.message)
         ? errorResponse.message[0]
         : errorResponse.message;
 
       if (exception instanceof ForbiddenException && errorResponse.message === 'forbidden') {
-        message = MESSAGES.USER_UNAUTHORIZED;
-      } else if (exception instanceof UnauthorizedException) {
-        message = MESSAGES.USER_NOT_LOGGED_IN;
-      } else {
-        message = error;
+        return MESSAGES.USER_UNAUTHORIZED;
       }
-
-      return response.status(status).json({
-        success: false,
-        message,
-        errors: Array.isArray(errorResponse.message) ? errorResponse.message : undefined,
-      });
+      if (exception instanceof UnauthorizedException) {
+        return MESSAGES.USER_NOT_LOGGED_IN;
+      }
+      if (status === HttpStatus.TOO_MANY_REQUESTS) {
+        return MESSAGES.TOO_MANY_REQUESTS;
+      }
+      return error;
     }
 
+    // Default fallback for non-HttpExceptions
     if (exception instanceof Error) {
-      message = exception['response'] || exception.message;
+      return exception['response'] || exception.message || MESSAGES.INTERNAL_ERROR;
     }
 
-    response.status(status).json({
-      success: false,
-      message,
-    });
+    return MESSAGES.INTERNAL_ERROR;
   }
 }

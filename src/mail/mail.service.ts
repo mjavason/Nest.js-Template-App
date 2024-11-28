@@ -16,8 +16,7 @@ export class MailService {
 
     // Compile the template
     const data = {
-      firstName: mailDetails.firstName,
-      lastName: mailDetails.lastName,
+      fullName: mailDetails.fullName,
       confirmationLink: confirmationLink,
     };
     const compiledTemplate = await this.renderMailTemplate(templatePath, data);

@@ -1,18 +1,20 @@
 import { Document } from 'mongoose';
 
 export interface IUser {
-  firstName: string;
-  lastName: string;
+  fullName: string;
   password: string;
   phoneNumber: string;
   isPhoneNumberVerified: boolean;
   isEmailVerified: boolean;
-  isBvnVerified: boolean;
   email: string;
   userType: string;
   role: string;
   status: string;
   avatarURL: string;
+  address: string;
+  mapLongitude: number;
+  mapLatitude: number;
+  signInWithGoogle: boolean;
 }
 
 interface IUserMethods {
@@ -31,13 +33,14 @@ export enum Status {
   INACTIVE = 'inactive',
 }
 
-export enum UserType {
+export enum USER_TYPES {
   USER = 'user',
   ADMIN = 'admin',
   SUPER_ADMIN = 'superAdmin',
 }
 
-export enum Roles {
+export enum USER_ROLES {
   BUSINESS_OWNER = 'businessOwner',
   CUSTOMER = 'customer',
+  COURIER = 'courier',
 }

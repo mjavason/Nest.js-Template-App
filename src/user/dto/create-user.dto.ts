@@ -9,7 +9,7 @@ import {
   IsOptional,
   IsUrl,
 } from 'class-validator';
-import { UserType, Roles, Status } from '../user.interface';
+import { USER_TYPES, USER_ROLES, Status } from '../user.interface';
 import { Trim } from 'src/common/decorators/util.decorator';
 
 export class CreateUserDTO {
@@ -17,13 +17,7 @@ export class CreateUserDTO {
   @IsNotEmpty()
   @IsString()
   @Trim()
-  firstName: string;
-
-  @ApiProperty({ description: 'Last name of the user', example: 'Doe' })
-  @IsNotEmpty()
-  @IsString()
-  @Trim()
-  lastName: string;
+  fullName: string;
 
   @ApiProperty({
     description: 'Password for the user account',
@@ -62,6 +56,14 @@ export class CreateUserDTO {
   isEmailVerified?: boolean;
 
   @ApiProperty({
+    description: 'Indicates if the user signed up/in with google',
+    example: false,
+    required: false,
+  })
+  @IsBoolean()
+  signInWithGoogle?: boolean;
+
+  @ApiProperty({
     description: 'Indicates if the BVN is verified',
     example: false,
     required: false,
@@ -80,19 +82,19 @@ export class CreateUserDTO {
 
   @ApiProperty({
     description: 'Type of user',
-    enum: UserType,
-    example: UserType.USER,
+    enum: USER_TYPES,
+    example: USER_TYPES.USER,
   })
-  @IsEnum(UserType)
-  userType: UserType;
+  @IsEnum(USER_TYPES)
+  USER_TYPES: USER_TYPES;
 
   @ApiProperty({
     description: 'Role of the user',
-    enum: Roles,
-    example: Roles.BUSINESS_OWNER,
+    enum: USER_ROLES,
+    example: USER_ROLES.BUSINESS_OWNER,
   })
-  @IsEnum(Roles)
-  role: Roles;
+  @IsEnum(USER_ROLES)
+  role: USER_ROLES;
 
   @ApiProperty({
     description: 'Account status of the user',

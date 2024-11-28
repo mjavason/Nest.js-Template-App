@@ -1,13 +1,13 @@
-import { Body, Controller, Get, Patch, UploadedFile, UseInterceptors } from '@nestjs/common';
-import { UserService } from './user.service';
 import { ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
-import { UpdateUserDTOWithAvatar } from './dto/update-user.dto';
-import { uploadImages } from 'src/common/configs';
+import { Body, Controller, Get, Patch, UploadedFile, UseInterceptors } from '@nestjs/common';
 import { BucketService } from 'src/bucket/bucket.service';
 import { FileInterceptor } from '@nestjs/platform-express';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
 import { IUser, IUserDocument } from './user.interface';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { UpdateUserDTOWithAvatar } from './dto/update-user.dto';
+import { uploadImages } from 'src/common/configs/multer.config';
+import { UserService } from './user.service';
 
 @Controller('user')
 @ApiTags('User')

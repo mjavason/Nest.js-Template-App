@@ -1,6 +1,6 @@
 import { Injectable, CanActivate, ExecutionContext, ForbiddenException } from '@nestjs/common';
 import { Reflector } from '@nestjs/core';
-import { Roles, UserType } from 'src/user/user.interface';
+import { USER_ROLES, USER_TYPES } from 'src/user/user.interface';
 
 @Injectable()
 export class RolesGuard implements CanActivate {
@@ -10,23 +10,23 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
     if (!user) return false;
 
-    const roles = this.reflector.getAllAndOverride<Roles[]>('roles', [
+    const USER_ROLES = this.reflector.getAllAndOverride<USER_ROLES[]>('USER_ROLES', [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (!roles || roles.length === 0) return true;
+    if (!USER_ROLES || USER_ROLES.length === 0) return true;
 
-    const userType = this.reflector.getAllAndOverride<UserType>('userType', [
+    const USER_TYPES = this.reflector.getAllAndOverride<USER_TYPES>('USER_TYPES', [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (userType && userType !== user.userType) {
+    if (USER_TYPES && USER_TYPES !== user.USER_TYPES) {
       throw new ForbiddenException(
-        `Access denied. Expected user type: ${userType}, but found: ${user.userType}.`,
+        `Access denied. Expected user type: ${USER_TYPES}, but found: ${user.USER_TYPES}.`,
       );
     }
 
-    if (!roles.includes(user.role)) {
+    if (!USER_ROLES.includes(user.role)) {
       throw new ForbiddenException(
         `Access denied. Your role does not have the necessary permissions.`,
       );

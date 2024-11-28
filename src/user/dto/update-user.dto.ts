@@ -1,24 +1,77 @@
 import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
-import { IsString, IsEmail, IsOptional, IsUrl, IsStrongPassword } from 'class-validator';
-import { Trim } from 'src/common/decorators/util.decorator';
+import { ConvertToInt, Trim } from 'src/common/decorators/util.decorator';
+import { IsEmail, IsOptional, IsString, IsStrongPassword, IsUrl } from 'class-validator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class UpdateUserDTO {
-  @ApiPropertyOptional({
-    description: 'First name of the user',
-  })
-  @IsOptional()
-  @IsString()
-  @Trim()
-  firstName?: string;
+  // @ApiProperty({
+  //   description: 'Indicates if the user’s phone number is verified',
+  //   default: undefined,
+  //   type: Boolean,
+  // })
+  // @IsBoolean()
+  isPhoneNumberVerified: boolean = undefined;
+
+  // @ApiProperty({
+  //   description: 'Indicates if the user’s email is verified',
+  //   default: undefined,
+  //   type: Boolean,
+  // })
+  // @IsBoolean()
+  isEmailVerified: boolean = undefined;
+
+  // @ApiProperty({
+  //   description: 'Type of user',
+  //   example: 'admin',
+  //   default: undefined,
+  // })
+  // @IsString()
+  USER_TYPES: string = undefined;
+
+  // @ApiProperty({
+  //   description: 'Role assigned to the user',
+  //   example: 'manager',
+  //   default: undefined,
+  // })
+  // @IsString()
+  role: string = undefined;
+
+  // @ApiProperty({
+  //   description: 'Current status of the user',
+  //   example: 'active',
+  //   default: undefined,
+  // })
+  // @IsString()
+  status: string = undefined;
 
   @ApiPropertyOptional({
-    description: 'Last name of the user',
+    description: 'Primary address of the user',
+  })
+  @IsOptional()
+  @IsString()
+  address: string;
+
+  @ApiPropertyOptional({
+    description: 'Longitude of the user’s location',
+  })
+  @IsOptional()
+  @ConvertToInt()
+  mapLongitude?: number;
+
+  @ApiPropertyOptional({
+    description: 'Latitude of the user’s location',
+  })
+  @IsOptional()
+  @ConvertToInt()
+  mapLatitude?: number;
+
+  @ApiPropertyOptional({
+    description: 'Full name of the user',
   })
   @IsOptional()
   @IsString()
   @Trim()
-  lastName?: string;
+  fullName?: string;
 
   @ApiPropertyOptional({
     description: 'Phone number of the user',
@@ -46,7 +99,9 @@ export class UpdateUserDTO {
   @Trim()
   password?: string;
 
-  @ApiPropertyOptional()
+  @ApiPropertyOptional({
+    description: 'URL for the user’s avatar image',
+  })
   @IsOptional()
   @IsString()
   @IsUrl()

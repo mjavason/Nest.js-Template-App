@@ -6,11 +6,15 @@ export function setupSwagger(app: INestApplication): void {
     .setTitle('Startup')
     .setDescription('Nest.js app')
     .setVersion('1.0')
-    // .addBearerAuth()
+    .addBearerAuth()
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
   SwaggerModule.setup('docs', app, document, {
-    /*swaggerOptions: { persistAuthorization: true } */
+    swaggerOptions: {
+      persistAuthorization: true,
+      docExpansion: 'none', // Collapse everything by default
+      // defaultModelsExpandDepth: -1, // Remove models (schemas) by default
+    },
   });
 }

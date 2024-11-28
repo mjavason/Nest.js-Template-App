@@ -1,0 +1,1 @@
+https://stackoverflow.com/questions/46288437/set-cookies-for-cross-origin-requests/46412839#46412839

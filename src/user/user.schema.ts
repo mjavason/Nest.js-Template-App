@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { IUser, Roles, Status, UserType } from './user.interface';
+import { IUser, USER_ROLES, Status, USER_TYPES } from './user.interface';
 
 @Schema({
   timestamps: true,
@@ -17,10 +17,7 @@ import { IUser, Roles, Status, UserType } from './user.interface';
 })
 export class User implements IUser {
   @Prop({ required: true })
-  firstName: string;
-
-  @Prop({ required: true })
-  lastName: string;
+  fullName: string;
 
   @Prop()
   password: string;
@@ -38,23 +35,18 @@ export class User implements IUser {
   })
   isEmailVerified: boolean;
 
-  @Prop({
-    default: false,
-  })
-  isBvnVerified: boolean;
-
   @Prop({ unique: true, required: true, trim: true })
   email: string;
 
   @Prop({
-    enum: UserType,
-    default: UserType.USER,
+    enum: USER_TYPES,
+    default: USER_TYPES.USER,
   })
   userType: string;
 
   @Prop({
-    enum: Roles,
-    default: Roles.CUSTOMER,
+    enum: USER_ROLES,
+    default: USER_ROLES.CUSTOMER,
   })
   role: string;
 
@@ -66,10 +58,22 @@ export class User implements IUser {
 
   @Prop({ required: true })
   avatarURL: string;
+
+  @Prop({ default: null })
+  address: string;
+
+  @Prop({ default: null })
+  mapLongitude: number;
+
+  @Prop({ default: null })
+  mapLatitude: number;
+
+  @Prop({ default: false })
+  signInWithGoogle: boolean;
 }
 
 export const userSchema = SchemaFactory.createForClass(User);
-const userModel = mongoose.model('User', userSchema);
+const userModel = mongoose.model(User.name, userSchema);
 
 userSchema.methods.comparePassword = async function compare(password: string) {
   return bcrypt.compare(password, this.password);

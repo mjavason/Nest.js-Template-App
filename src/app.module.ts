@@ -1,31 +1,51 @@
-import { AppService } from './app.service';
-import { Logger, Module } from '@nestjs/common';
-import { AuthModule } from './auth/auth.module';
-import { MailModule } from './mail/mail.module';
-import { UserModule } from './user/user.module';
-import { AppController } from './app.controller';
-import { MongooseModule } from '@nestjs/mongoose';
-import { BucketModule } from './bucket/bucket.module';
-import { CommonModule } from './common/common.module';
 import mongooseAutoPopulate from 'mongoose-autopopulate';
+import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { AppController } from './app.controller';
+import { AppService } from './app.service';
+import { AuthModule } from './auth/auth.module';
+import { BucketModule } from './bucket/bucket.module';
+import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { CommonModule } from './common/common.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
+import { ContactModule } from './contact/contact.module';
+import { Logger, Module } from '@nestjs/common';
+import { MailModule } from './mail/mail.module';
+import { MongooseModule } from '@nestjs/mongoose';
+import { paginatePlugin, searchPlugin } from './common/db-plugins';
+import { ReviewModule } from './review/review.module';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import { UserModule } from './user/user.module';
 import {
   appConfig,
+  CACHE_EXPIRY,
   cloudinaryConfig,
   databaseConfig,
   mailConfig,
 } from './common/configs/constants';
-import { paginatePlugin, searchPlugin } from './common/db-plugins';
-
-// import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
-// import { APP_INTERCEPTOR } from '@nestjs/core';
 
 @Module({
   imports: [
-    // CacheModule.register({
-    //   isGlobal: true,
-    //   ttl: 1 * 60 * 60, // 12 hours
-    // }),
+    ThrottlerModule.forRoot([
+      {
+        name: 'short',
+        ttl: 1000,
+        limit: 3,
+      },
+      {
+        name: 'medium',
+        ttl: 10000,
+        limit: 20,
+      },
+      {
+        name: 'long',
+        ttl: 60000,
+        limit: 100,
+      },
+    ]),
+    CacheModule.register({
+      isGlobal: true,
+      ttl: CACHE_EXPIRY, // 12 hours
+    }),
     CommonModule,
     ConfigModule.forRoot({
       envFilePath: '.env',
@@ -49,14 +69,20 @@ import { paginatePlugin, searchPlugin } from './common/db-plugins';
     MailModule,
     UserModule,
     BucketModule,
+    ReviewModule,
+    ContactModule,
   ],
   controllers: [AppController],
   providers: [
     AppService,
-    // {
-    //   provide: APP_INTERCEPTOR,
-    //   useClass: CacheInterceptor,
-    // },
+    {
+      provide: APP_INTERCEPTOR,
+      useClass: CacheInterceptor,
+    },
+    {
+      provide: APP_GUARD,
+      useClass: ThrottlerGuard,
+    },
   ],
 })
 export class AppModule {}

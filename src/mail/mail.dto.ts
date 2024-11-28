@@ -20,6 +20,18 @@ export class SendMailDTO {
   body: string;
 }
 
+export class SendMailParamsDTO {
+  @ApiProperty({ example: 'Hello' })
+  @IsString()
+  title: string;
+
+  @ApiProperty({
+    example: 'Hello fellow Human, this is a simple mail test, do not be alarmed',
+  })
+  @IsString()
+  body: string;
+}
+
 export class SendWelcomeMailDTO {
   @ApiProperty({ description: 'Recipient email' })
   @IsEmail()
@@ -27,11 +39,7 @@ export class SendWelcomeMailDTO {
 
   @ApiProperty()
   @IsString()
-  firstName: string;
-
-  @ApiProperty()
-  @IsString()
-  lastName: string;
+  fullName: string;
 
   @ApiProperty()
   @IsString()

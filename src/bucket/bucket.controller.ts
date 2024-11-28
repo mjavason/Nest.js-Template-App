@@ -1,11 +1,11 @@
+import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { ApiBody, ApiConsumes, ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
 import { BucketService } from './bucket.service';
-import { AnyFilesInterceptor, FileInterceptor } from '@nestjs/platform-express';
 import { FileUploadDTO, MultiFileUploadDTO } from 'src/common/dtos/file.dto';
 import { IUserDocument } from 'src/user/user.interface';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { upload } from 'src/common/configs';
+import { upload } from 'src/common/configs/multer.config';
 import {
   BadRequestException,
   Controller,
@@ -31,7 +31,8 @@ export class BucketController {
   async uploadFile(@UploadedFile() uploadedFile: MulterFile, @CurrentUser() auth: IUserDocument) {
     if (!uploadedFile) throw new BadRequestException('No file uploaded');
 
-    return await this.bucketService.uploadToCloudinary(uploadedFile.path, undefined, auth.id);
+    const data = await this.bucketService.uploadToCloudinary(uploadedFile.path, undefined, auth.id);
+    return { data: data.url };
   }
 
   @Post('upload-multiple')
@@ -42,7 +43,6 @@ export class BucketController {
   @Auth()
   async create(@UploadedFiles() files: MulterFile[], @CurrentUser() auth: IUserDocument) {
     const uploadedFiles = files.filter((file) => file.fieldname === 'uploadedFiles');
-
     if (uploadedFiles.length < 1) throw new BadRequestException('No files uploaded');
 
     // Upload all files concurrently and wait for them to finish
@@ -53,7 +53,7 @@ export class BucketController {
           auth.id, // folder
           auth.id, // author
         );
-        return fileUploaded;
+        return fileUploaded.url;
       }),
     );
 
