@@ -3,7 +3,6 @@ import { AuthGuard } from '@nestjs/passport';
 import { AuthService } from '../services/auth.service';
 import { BASE_URL } from 'src/common/configs/constants';
 import { BucketService } from 'src/bucket/bucket.service';
-import { codeGenerator } from 'src/common/utils/random_token.util';
 import { FileInterceptor } from '@nestjs/platform-express';
 import { ForgotPasswordDto, RefreshTokenDto, VerifyTokenDto } from '../dto/token.dto';
 import { generateRandomAvatar } from 'src/common/utils/dicebar.util';
@@ -22,6 +21,7 @@ import {
   Body,
   ConflictException,
   Controller,
+  Delete,
   Get,
   Logger,
   Param,
@@ -33,6 +33,8 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
+import { IUserDocument } from 'src/user/user.interface';
 
 @Controller('auth')
 @ApiTags('Auth')
@@ -172,5 +174,20 @@ export class AuthController {
       Logger.error(error.message);
       throw new BadRequestException('Invalid or expired token');
     }
+  }
+
+  @Delete('logout')
+  @ApiOperation({ summary: 'Log out and invalidate refresh tokens' })
+  @Auth()
+  async logout(@CurrentUser() auth: IUserDocument) {
+    const token = await this.tokenService.findOne({
+      user: auth.id,
+      type: TOKEN_TYPE.REFRESH_TOKEN,
+    });
+    if (token) await token.deleteOne();
+
+    return {
+      message: 'Logged out successfully! Have a nice day',
+    };
   }
 }
