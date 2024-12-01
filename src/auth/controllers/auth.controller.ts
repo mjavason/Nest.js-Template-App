@@ -18,6 +18,7 @@ import { TokenService } from '../services/token.service';
 import { uploadImages } from 'src/common/configs/multer.config';
 import { UserService } from 'src/user/user.service';
 import {
+  BadRequestException,
   Body,
   ConflictException,
   Controller,
@@ -154,7 +155,7 @@ export class AuthController {
 
   @Get('verify-email')
   @ApiOperation({ summary: 'Verify user email address' })
-  async verifyEmail(@Query('token') token: string, @Res() res: Response) {
+  async verifyEmail(@Query('token') token: string) {
     try {
       const payload: IDecodedToken = await this.jwtService.verifyAsync(token);
       await this.userService.update(payload.sub, {
@@ -169,7 +170,7 @@ export class AuthController {
     } catch (error) {
       // Handle any errors, e.g., invalid token
       Logger.error(error.message);
-      return res.status(400).send('Invalid or expired token');
+      throw new BadRequestException('Invalid or expired token');
     }
   }
 }
