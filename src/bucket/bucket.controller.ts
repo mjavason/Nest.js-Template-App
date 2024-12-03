@@ -31,7 +31,7 @@ export class BucketController {
   async uploadFile(@UploadedFile() uploadedFile: MulterFile, @CurrentUser() auth: IUserDocument) {
     if (!uploadedFile) throw new BadRequestException('No file uploaded');
 
-    const data = await this.bucketService.uploadToCloudinary(uploadedFile.path, undefined, auth.id);
+    const data = await this.bucketService.uploadToCloudinary(uploadedFile.path, auth.id, auth.id);
     return { data: data.url };
   }
 
