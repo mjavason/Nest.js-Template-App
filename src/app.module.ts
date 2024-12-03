@@ -71,6 +71,7 @@ import {
     BucketModule,
     ReviewModule,
     ContactModule,
+    // ScheduleModule.forRoot(),
   ],
   controllers: [AppController],
   providers: [
