@@ -1,0 +1,222 @@
+Create me a full module from an interface with the needed files (schema, service, dto's(create, update, filter) and controller. Below i'll give you an example of each. Follow the process as strictly as possible. Dont create any files now. just note this sample. I'll give you the interface after this.
+
+INTERFACE
+import { UploadApiResponse } from 'cloudinary';
+import { Document } from 'mongoose';
+
+export interface IGeneric {
+  url: string;
+  cloudinaryId: string;
+  author?: string;
+  metaData: UploadApiResponse;
+}
+
+export interface IGenericDocument extends IGeneric, Document {}
+
+
+
+SCHEMA
+import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
+import { IGeneric } from './generic.interface';
+import { UploadApiResponse } from 'cloudinary';
+
+@Schema({
+  timestamps: true,
+  toJSON: {
+    virtuals: true,
+    transform: (doc, ret) => {
+      delete ret._id;
+      delete ret.__v;
+      return ret;
+    },
+  },
+})
+export class Generic implements IGeneric {
+  @Prop()
+  author: string;
+
+  @Prop({ required: true })
+  url: string;
+
+  @Prop({ required: true })
+  cloudinaryId: string;
+
+  @Prop({ required: true, type: Object })
+  metaData: UploadApiResponse;
+}
+
+export const genericSchema = SchemaFactory.createForClass(Generic);
+
+
+
+SERVICE
+import { Injectable } from '@nestjs/common';
+import { InjectModel } from '@nestjs/mongoose';
+import { Model } from 'mongoose';
+import { Generic } from './generic.schema';
+import { GenericService } from '../common/services/generic.service'; 
+import { IGenericDocument } from './generic.interface';
+
+@Injectable()
+export class GenericService extends GenericService<IGenericDocument> {
+  constructor(@InjectModel(Generic.name) private genericModel: Model<IGenericDocument>) {
+    super(genericModel);
+  }
+}
+
+
+
+DTO's
+create
+import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
+import { IsMongoId, IsOptional, IsString } from 'class-validator';
+
+export class CreateGenericDto {
+  @ApiProperty({
+    description: 'URL of the resource',
+    type: String,
+    example: 'https://example.com/resource.jpg',
+  })
+  @IsString()
+  url: string;
+
+  @ApiProperty({
+    description: 'Cloudinary ID of the resource',
+    type: String,
+    example: 'abc123xyz',
+  })
+  @IsString()
+  cloudinaryId: string;
+
+  @ApiPropertyOptional({
+    description: 'Author of the resource',
+    type: String,
+    example: 'John Doe',
+  })
+  @IsString()
+  @IsOptional()
+  author: string;
+}
+
+
+update
+import { PartialType } from '@nestjs/swagger';
+import { CreateGenericDto } from './create-generic.dto';
+
+export class UpdateGenericDto extends PartialType(CreateGenericDto) {}
+
+
+filter
+import { ApiPropertyOptional } from '@nestjs/swagger';
+import { IsMongoId, IsOptional, IsString, IsNumberString, Min } from 'class-validator';
+
+export class FilterGenericDto {
+  @ApiPropertyOptional({
+    description: 'Author of the resource',
+    type: String,
+    example: 'John Doe',
+  })
+  @IsOptional()
+  @IsString()
+  author: string;
+
+  @ApiPropertyOptional({
+    description: 'Cloudinary ID of the resource',
+    type: String,
+    example: 'abc123xyz',
+  })
+  @IsOptional()
+  @IsString()
+  cloudinaryId: string;
+}
+
+export class FilterGenericWithPaginationDto extends FilterGenericDto {
+  @ApiPropertyOptional({
+    description: 'Number of objects per page',
+    type: Number,
+    default: 10,
+  })
+  @ConvertToInt() //Dont update this, its very important
+  @Min(1)
+  pagination_size: number = 10;
+
+  @ApiPropertyOptional({
+    description: 'Page number',
+    type: Number,
+    default: 1,
+  })
+  @ConvertToInt() //Dont update this, its very important
+  @Min(1)
+  pagination_page: number = 1;
+}
+
+
+
+CONTROLLER
+import {
+  Controller,
+  Get,
+  Post,
+  Body,
+  Patch,
+  Param,
+  Delete,
+  Query,
+} from '@nestjs/common';
+import { GenericService } from './generic.service';
+import { CreateGenericDto } from './dto/create-generic.dto';
+import { UpdateGenericDto } from './dto/update-generic.dto';
+import { FilterGenericWithPaginationDto } from './dto/filter-generic.dto';
+import {
+  ApiBadRequestResponse,
+  ApiInternalServerErrorResponse,
+  ApiOkResponse,
+  ApiOperation,
+  ApiTags,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { Auth } from 'src/common/decorators/auth.decorator';
+import { UniqueIdDTO } from 'src/common/dtos/unique-id.dto';
+
+@Controller('generic')
+@ApiTags('Generic')
+@ApiOkResponse({ description: 'Success' })
+@ApiInternalServerErrorResponse({ description: 'Internal Server Error' })
+@ApiBadRequestResponse({ description: 'Invalid Parameters' })
+@ApiUnauthorizedResponse({ description: 'Unauthorized' })
+export class GenericController {
+  constructor(private readonly genericService: GenericService) {}
+
+  @Post()
+  @ApiOperation({ summary: 'Create a new resource' })
+  @Auth()
+  async create(@Body() createGenericDto: CreateGenericDto) {
+    return await this.genericService.create(createGenericDto);
+  }
+
+  @Get()
+  @ApiOperation({ summary: 'Retrieve all resources with pagination' })
+  async findAll(@Query() filter: FilterGenericWithPaginationDto) {
+    return await this.genericService.findAll(filter);
+  }
+
+  @Get('/:id')
+  @ApiOperation({ summary: 'Retrieve a resource by ID' })
+  async findOne(@Param() uniqueIdDTO: UniqueIdDTO) {
+    return await this.genericService.findOne({ _id: uniqueIdDTO.id });
+  }
+
+  @Patch('/:id')
+  @ApiOperation({ summary: 'Update an existing resource' })
+  @Auth()
+  async update(@Param() uniqueIdDTO: UniqueIdDTO, @Body() updateGenericDto: UpdateGenericDto) {
+    return await this.genericService.update(uniqueIdDTO.id, updateGenericDto);
+  }
+
+  @Delete('/:id')
+  @ApiOperation({ summary: 'Delete a resource' })
+  @Auth()
+  async remove(@Param() uniqueIdDTO: UniqueIdDTO) {
+    return await this.genericService.remove(uniqueIdDTO.id);
+  }
+}
