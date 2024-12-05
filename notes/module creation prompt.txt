@@ -130,6 +130,26 @@ export class FilterGenericDto {
   cloudinaryId: string;
 }
 
+export class FilterGenericWithOrDto {
+  @ApiPropertyOptional({
+    description: 'Author of the resource',
+    type: [String],
+    example: ['John Doe', 'Jane Doe'],
+  })
+  @IsOptional()
+  @IsString({ each: true })
+  author: string[];
+
+  @ApiPropertyOptional({
+    description: 'Cloudinary ID of the resource',
+    type: [String],
+    example: ['abc123xyz', 'xyz456abc'],
+  })
+  @IsOptional()
+  @IsString({ each: true })
+  cloudinaryId: string[];
+}
+
 export class FilterGenericWithPaginationDto extends FilterGenericDto {
   @ApiPropertyOptional({
     description: 'Number of objects per page',
@@ -150,6 +170,17 @@ export class FilterGenericWithPaginationDto extends FilterGenericDto {
   pagination_page: number = 1;
 }
 
+export class FilterGenericWithOrAndPaginationDto extends FilterGenericWithOrDto {
+  @ApiPropertyOptional({ description: 'Number of objects per page', type: Number, default: 10 })
+  @ConvertToInt()
+  @Min(1)
+  pagination_size: number = 10;
+
+  @ApiPropertyOptional({ description: 'Page number', type: Number, default: 1 })
+  @ConvertToInt()
+  @Min(1)
+  pagination_page: number = 1;
+}
 
 
 CONTROLLER
@@ -166,7 +197,7 @@ import {
 import { GenericService } from './generic.service';
 import { CreateGenericDto } from './dto/create-generic.dto';
 import { UpdateGenericDto } from './dto/update-generic.dto';
-import { FilterGenericWithPaginationDto } from './dto/filter-generic.dto';
+import { FilterProductWithOrAndPaginationDto, FilterProductWithPaginationDto } from './dto/filter-generic.dto';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -192,6 +223,12 @@ export class GenericController {
   @Auth()
   async create(@Body() createGenericDto: CreateGenericDto) {
     return await this.genericService.create(createGenericDto);
+  }
+
+  @Post('/advanced-search')
+  @ApiOperation({ summary: 'Advanced OR search with pagination' })
+  async findAllWithOr(@Body() filter: FilterProductWithOrAndPaginationDto) {
+    return await this.productService.findWithMultipleOrFields(filter);
   }
 
   @Get()
