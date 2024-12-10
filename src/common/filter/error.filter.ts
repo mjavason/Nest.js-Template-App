@@ -1,4 +1,4 @@
-import { MESSAGES } from '../configs/constants';
+import { APP_NAME, MESSAGES } from '../configs/constants';
 import { Response } from 'express';
 import {
   ArgumentsHost,
@@ -10,10 +10,12 @@ import {
   UnauthorizedException,
   Logger,
 } from '@nestjs/common';
+import { ApiService } from '../utils/api.util';
 
 @Catch()
 export class HttpExceptionFilter implements ExceptionFilter {
   private readonly logger = new Logger(HttpExceptionFilter.name);
+  private monitorBot = new ApiService('https://telegram-monitor-bot.onrender.com/report');
 
   catch(exception: unknown, host: ArgumentsHost): void {
     const context = host.switchToHttp();
@@ -28,6 +30,14 @@ export class HttpExceptionFilter implements ExceptionFilter {
       this.logger.error(exception);
     }
     this.logger.error(message);
+    this.monitorBot.post(`/${APP_NAME}`, {
+      status,
+      message,
+      ...(exception instanceof HttpException &&
+        Array.isArray(exception.getResponse()['message'] as unknown) && {
+          errors: exception.getResponse()['message'],
+        }),
+    });
 
     response.status(status).json({
       success: false,
