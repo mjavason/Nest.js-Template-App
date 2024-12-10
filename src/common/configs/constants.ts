@@ -71,7 +71,7 @@ export const DISCOUNT_CAP = 2500;
 export const DEFAULT_COORDINATES = { longitude: 7.493249773979187, latitude: 6.384240273385399 };
 export const DEFAULT_ADDRESS = 'Gariki enugu, 349 Agbani Rd, Gariki, Enugu 400107, Enugu, Nigeria';
 export const CONTACT_PHONE = '08148863871';
-export const CONTACT_EMAIL = 'ogahmotion@gmail.com';
+export const CONTACT_EMAIL = 'startup@gmail.com';
 // Coordinates: Latitude: 6.384240273385399, Longitude: 7.493249773979187
 // Address: Gariki enugu, 349 Agbani Rd, Gariki, Enugu 400107, Enugu, Nigeria
 
