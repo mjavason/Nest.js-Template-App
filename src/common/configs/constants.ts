@@ -68,12 +68,10 @@ export const CHICKEN_AVERAGE_WEIGHT = 5; // Weight threshold in kg
 export const COST_MULTIPLIER = 2 * CHICKEN_AVERAGE_WEIGHT; // Multiplier threshold for additional cost
 export const DISCOUNT_CAP = 2500;
 
-export const DEFAULT_COORDINATES = { longitude: 7.493249773979187, latitude: 6.384240273385399 };
-export const DEFAULT_ADDRESS = 'Gariki enugu, 349 Agbani Rd, Gariki, Enugu 400107, Enugu, Nigeria';
-export const CONTACT_PHONE = '08148863871';
+export const DEFAULT_COORDINATES = { longitude: 7.49, latitude: 6.389 };
+export const DEFAULT_ADDRESS = 'Gariki enugu';
+export const CONTACT_PHONE = '08148223122';
 export const CONTACT_EMAIL = 'startup@gmail.com';
-// Coordinates: Latitude: 6.384240273385399, Longitude: 7.493249773979187
-// Address: Gariki enugu, 349 Agbani Rd, Gariki, Enugu 400107, Enugu, Nigeria
 
 export const CACHE_EXPIRY = 1000 * 1 * 60 * 60 * 12; //12 hours (milliseconds)
 
