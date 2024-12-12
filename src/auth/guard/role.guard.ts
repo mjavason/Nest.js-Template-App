@@ -10,23 +10,23 @@ export class RolesGuard implements CanActivate {
     const { user } = context.switchToHttp().getRequest();
     if (!user) return false;
 
-    const USER_ROLES = this.reflector.getAllAndOverride<USER_ROLES[]>('USER_ROLES', [
+    const roles = this.reflector.getAllAndOverride<USER_ROLES[]>('roles', [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (!USER_ROLES || USER_ROLES.length === 0) return true;
+    if (!roles || roles.length === 0) return true;
 
-    const USER_TYPES = this.reflector.getAllAndOverride<USER_TYPES>('USER_TYPES', [
+    const userType = this.reflector.getAllAndOverride<USER_TYPES>('userType', [
       context.getHandler(),
       context.getClass(),
     ]);
-    if (USER_TYPES && USER_TYPES !== user.USER_TYPES) {
+    if (userType && userType !== user.userType) {
       throw new ForbiddenException(
-        `Access denied. Expected user type: ${USER_TYPES}, but found: ${user.USER_TYPES}.`,
+        `Access denied. Expected user type: ${userType}, but found: ${user.userType}.`,
       );
     }
 
-    if (!USER_ROLES.includes(user.role)) {
+    if (!roles.includes(user.role)) {
       throw new ForbiddenException(
         `Access denied. Your role does not have the necessary permissions.`,
       );
