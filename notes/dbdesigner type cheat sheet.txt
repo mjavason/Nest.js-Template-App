@@ -1,0 +1,26 @@
+Table_A {
+	id integer pk increments unique
+	name string
+	description text
+	created_at datetime
+	is_active boolean
+	score decimal(5,2)
+}
+
+Table_B {
+	id integer pk increments unique
+	table_a_id integer > Table_A.id
+	status string
+	start_date date
+	end_date date
+	metadata object
+}
+
+Table_C {
+	id integer pk increments unique
+	table_b_id integer > Table_B.id
+	file_data blob
+	price decimal(10,2)
+	quantity integer
+	notes text
+}
