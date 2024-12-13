@@ -1,10 +1,11 @@
 # Nest.js-Template-App
 
-Quick generic template for spinning up Nest.js apps. Supports cookie authentication, Swagger documentation, validation, logging, Mongoose ORM, environment variables, file handling, emails, caching, and more. Built for flexibility and scalability, this template is designed to help you bootstrap your next Nest.js project efficiently.
+Quick generic template for spinning up Nest.js apps. Supports JWT authentication, cookie authentication, OAuth (Google), Swagger documentation, validation, logging, Mongoose ORM, environment variables, file handling, emails, caching, rate limiting, [Telegram bot error monitoring](https://github.com/mjavason/Telegram-Monitor-Bot), and more. Built for flexibility and scalability, this template is designed to help you bootstrap your next Nest.js project efficiently.
 
 ## Features
 
-- **Cookie-based Authentication**: Secure, stateful authentication using cookies.
+- **JWT-based Authentication**: Secure, stateful authentication using JSON web tokens.
+- **OAuth Integration (Google)**: The template supports OAuth 2.0 for easy integration with Google for social login.
 - **Swagger Documentation**: Automatically generated API documentation with Swagger.
 - **Validation**: Input validation using `class-validator` and `class-transformer`.
 - **Logging**: Structured logging with custom log levels.
@@ -13,6 +14,8 @@ Quick generic template for spinning up Nest.js apps. Supports cookie authenticat
 - **File Handling**: Support for file uploads and management.
 - **Email Support**: Integrated email service for notifications or transactional emails.
 - **Caching**: Easily configurable caching mechanisms.
+- **Telegram Bot Error Monitoring**: Integrates with the Telegram Monitor Bot for error reporting.
+
 
 ## Prerequisites
 
@@ -50,7 +53,7 @@ Ensure that your `.env` file is set up correctly before running the app.
 
 ## Environment Variables
 
-The app uses environment variables to configure various settings. Check the .env.sample file for some key variables you might need to set up.
+The app uses environment variables to configure various settings. Check the `.env.sample` file for some key variables you might need to set up.
 
 ## Test
 
@@ -80,7 +83,7 @@ Here's an overview of the project structure:
 │   ├── log.controller.ts      # Logging controller
 │   ├── auth/                  # Authentication module
 │   ├── bucket/                # File storage and bucket management
-│   ├── common/                # Shared utilities, guards, configs and interceptors
+│   ├── common/                # Shared utilities, guards, configs, and interceptors
 │   ├── mail/                  # Email service integration
 │   ├── user/                  # User-related logic
 │   ├── ...                    # Additional modules and services
@@ -89,7 +92,6 @@ Here's an overview of the project structure:
 ├── .env.example               # Example environment configuration
 ├── package.json               # Project dependencies and scripts
 └── README.md                  # Project documentation
-
 ```
 
 ## Contributing
