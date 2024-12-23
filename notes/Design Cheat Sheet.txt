@@ -1,0 +1,54 @@
+Text Size
+6px (small details)
+8px (captions, tiny text)
+12px (footnotes, fine print)
+16px (base body text) [IDEAL]
+20px (small heading) [IDEAL]
+24px (subheading) [IDEAL]
+32px (h3) [IDEAL]
+48px (h2) [IDEAL]
+64px (h1)
+96px (display text)
+128px (large display)
+160px (extra-large display)
+192px (banner display)
+256px (hero display)
+320px (giant display)
+384px (massive display)
+
+Line Height
+Headings (1.1x to 1.3x the size in pixels)
+Body Text (1.3x - 1.5x the size in pixels)
+
+Letter Spacing
+Headings (-1 to -2% the size in pixels)
+
+Text Alignment
+Headings (center)
+Note: never mix 'center align' header and 'left align' body text.
+header center == body center
+header aligned == body aligned.
+Be consistent
+
+Body Text Limit Recommendations
+Anywhere within 50 to 75 characters is okay.
+
+Heirachy
+Try to stick to just five different font sizes and use font weight and subtle color changes to indicate heirachy
+
+Spacing
+Use Relationships.
+if the space between header 2 and body 2 is 1x, the space between header 2 and body 1 should be 2x.
+
+Color
+You need only 3 ( use opacity for variety)
+Base (Website Background) - good contrast
+Primary (CTAs, small details) - good contrast
+Neutral (text elements) - light and dark if need be
+
+Visuals (with midjourney AI)
+Niche: (agriculture)
+Style: (isometric 3d)
+Colors: (green earth tone colors, background white)
+
+Consistency is good, but deviate every now and then so the site looks fresh always. Follow an S or slithering snake shape in your deviations.

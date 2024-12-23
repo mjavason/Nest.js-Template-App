@@ -1,0 +1,16 @@
+CUSTOMER ACQUISITION METRICS
+Lifetime Conversion Rate: The percentage of users who take a desired action (e.g., making a purchase).
+
+
+REVENUE METRICS
+Average Order Value (AOV): The average amount spent per order.
+
+Revenue Per Visitor (RPV): The revenue generated per app/site visitor.
+
+Cart Abandonment Rate: The percentage of users who add items to the cart but don’t complete the purchase.
+ 
+
+RETENTION METRICS
+Retention Rate: The percentage of customers who return to your app after their first purchase.
+
+Churn Rate: The percentage of customers lost in a specific period.

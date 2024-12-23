@@ -1,0 +1,16 @@
+1) Complete User Flow
+2) Wire Framing (pages)
+3) Design System
+ - Colours (background, text, primary, secondary, accent, error and success)
+ - Fonts and Typescale
+ - Buttons
+ - Inputs
+ - Cards
+
+Design Principles: Visual heirachy, contrast, balance, consistency, simplicity and feedback.
+
+Preview color and font with this site below. Give 5 different examples. all the fields are appended in a particular order.
+colors: text, background, primary, secondary, accent
+font: header, body
+
+sample: https://www.realtimecolors.com/?colors=f0f7e8-060a03-b6db94-2c8240-49c27b&fonts=Roboto-Roboto
