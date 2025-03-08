@@ -9,7 +9,7 @@ export async function pingSelf() {
     Logger.log(`Server pinged successfully: ${data.message}`);
     return true;
   } catch (e: unknown) {
-    if (e instanceof Error) Logger.log(`this the error message: ${e.message}`);
+    if (e instanceof Error) Logger.log(`Error message: ${e.message}`);
     return;
   }
 }
