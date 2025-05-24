@@ -92,7 +92,7 @@ export class AuthController {
   })
   @UseGuards(LocalAuthGuard)
   @ApiBody({ type: LoginDTO })
-  async login(@Req() req, @Res({ passthrough: true }) res: Response) {
+  async login(@Req() req) {
     const user = await this.userService.findOne({ _id: req.user.id });
     const accessToken = await this.authService.login(req.user);
     const refreshToken = await this.authService.generateRefreshToken(user.id);

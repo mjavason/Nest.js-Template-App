@@ -3,7 +3,6 @@ import { ExtractJwt, Strategy } from 'passport-jwt';
 import { IDecodedToken } from '../interfaces/auth.interface';
 import { Inject, Injectable, UnauthorizedException } from '@nestjs/common';
 import { PassportStrategy } from '@nestjs/passport';
-import { Request } from 'express';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()

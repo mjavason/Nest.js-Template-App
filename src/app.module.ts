@@ -1,10 +1,10 @@
 import mongooseAutoPopulate from 'mongoose-autopopulate';
-import { APP_GUARD, APP_INTERCEPTOR } from '@nestjs/core';
+import { APP_GUARD } from '@nestjs/core';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { BucketModule } from './bucket/bucket.module';
-import { CacheInterceptor, CacheModule } from '@nestjs/cache-manager';
+import { CacheModule } from '@nestjs/cache-manager';
 import { CommonModule } from './common/common.module';
 import { ConfigModule, ConfigService } from '@nestjs/config';
 import { ContactModule } from './contact/contact.module';

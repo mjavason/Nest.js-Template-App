@@ -174,7 +174,7 @@ export class GenericService<T extends Document> {
       'Friday',
       'Saturday',
     ];
-    const fullWeek = dayNames.slice(1).map((day, index) => ({
+    const fullWeek = dayNames.slice(1).map((day) => ({
       dayOfWeek: day,
       total: 0,
     }));
