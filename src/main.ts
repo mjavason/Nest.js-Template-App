@@ -5,10 +5,9 @@ import { HttpExceptionFilter } from './common/filter/error.filter';
 import { loggerConfig } from './common/utils/logger.util';
 import { NestFactory } from '@nestjs/core';
 import { setupSwagger } from './common/configs/swagger.config';
-import { TransformInterceptor } from './common/interceptors/transform.intrerceptor';
+import { TransformInterceptor } from './common/interceptors/transform.interceptor';
 import { ValidationPipe } from '@nestjs/common';
-import './common/utils/ping.util';
-// import cookieParser from 'cookie-parser';
+// import './common/utils/ping.util';
 
 async function bootstrap() {
   const app = await NestFactory.create(AppModule, {
