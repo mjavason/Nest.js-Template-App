@@ -6,12 +6,11 @@ import { APP_NAME } from 'src/common/configs/constants';
 import { GenericService } from '../common/providers/generic.service';
 import { IBucketDocument } from './bucket.interface';
 import { Bucket } from './bucket.schema';
-// Import the GenericService
 
 @Injectable()
 export class BucketService extends GenericService<IBucketDocument> {
   constructor(@InjectModel(Bucket.name) bucketModel: Model<IBucketDocument>) {
-    super(bucketModel); // Pass the model to the GenericService constructor
+    super(bucketModel);
   }
 
   async uploadToCloudinary(path: string, folder: string = 'global', author: string = '001x') {

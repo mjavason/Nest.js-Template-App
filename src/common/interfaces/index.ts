@@ -37,13 +37,11 @@ export interface PaginationData {
   hasPreviousPage: boolean;
 }
 
-// Define the return type for pagination
 export interface PaginationResult<T> {
   data: T[];
   pagination: PaginationData;
 }
 
-// Extend the Model interface with the custom paginate method
 export interface PaginateModel<T> extends Model<T> {
   paginate(filter: FilterQuery<T>, options: PaginationOptions): Promise<PaginationResult<T>>;
 }

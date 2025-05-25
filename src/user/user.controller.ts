@@ -38,7 +38,6 @@ export class UserController {
       ...updateUserDto,
     };
 
-    // if an image was uploaded, set the avatarURL as its path
     if (avatar) {
       const imageUpload = await this.bucketService.uploadToCloudinary(avatar.path);
       updates.avatarURL = imageUpload.url;

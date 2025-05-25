@@ -1,4 +1,4 @@
-Create me a full module from an interface with the needed files (schema, service, dto's(create, update, filter) and controller. Below i'll give you an example of each. Follow the process as strictly as possible. Dont create any files now. just note this sample. I'll give you the interface after this.
+Create me a full module from an interface with the needed files (schema, service, dto's(create, update, filter) and controller. Below i'll give you an example of each. Follow the process as strictly as possible. do not create any files now. just note this sample. I'll give you the interface after this.
 
 INTERFACE
 import { UploadApiResponse } from 'cloudinary';
@@ -156,7 +156,7 @@ export class FilterGenericWithPaginationDto extends FilterGenericDto {
     type: Number,
     default: 10,
   })
-  @ConvertToInt() //Dont update this, its very important
+  @ConvertToInt() //do not update this, its very important
   @Min(1)
   pagination_size: number = 10;
 
@@ -165,7 +165,7 @@ export class FilterGenericWithPaginationDto extends FilterGenericDto {
     type: Number,
     default: 1,
   })
-  @ConvertToInt() //Dont update this, its very important
+  @ConvertToInt() //do not update this, its very important
   @Min(1)
   pagination_page: number = 1;
 }

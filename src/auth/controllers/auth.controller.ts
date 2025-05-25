@@ -97,7 +97,6 @@ export class AuthController {
     const accessToken = await this.authService.login(req.user);
     const refreshToken = await this.authService.generateRefreshToken(user.id);
 
-    // res.cookie('token', token, cookieConfig);
     return { message: 'Logged in successfully', data: { user, accessToken, refreshToken } };
   }
 
@@ -120,17 +119,6 @@ export class AuthController {
     return { data };
   }
 
-  // @Delete('logout')
-  // @ApiOperation({ summary: 'Log out and delete cookie session' })
-  // @Auth()
-  // async logout(@Res({ passthrough: true }) response: Response) {
-  //   response.clearCookie('token', clearCookieConfig);
-
-  //   return {
-  //     message: 'Logged out successfully! Have a nice day',
-  //   };
-  // }
-
   @Get('google')
   @ApiOperation({
     summary: 'Sign in with google',
@@ -144,7 +132,6 @@ export class AuthController {
   @UseGuards(AuthGuard('google'))
   async googleLoginCallback(@Req() req, @Res() res: Response) {
     const data = await this.authService.socialSignIn(req.user);
-    // res.cookie('token', token, cookieConfig);
     return res.redirect(
       `${BASE_URL}/api/v1/auth/show-working?registered=true&accessToken=${data.accessToken}&refreshToken=${data.refreshToken}`,
     );
@@ -165,12 +152,7 @@ export class AuthController {
       });
 
       return { message: 'Email verified successfully' };
-
-      // Redirect to the frontend after successful verification
-      // const redirectUrl = `${FRONTEND_URL}/login`;
-      // return res.redirect(redirectUrl);
     } catch (error) {
-      // Handle any errors, e.g., invalid token
       Logger.error(error.message);
       throw new BadRequestException('Invalid or expired token');
     }

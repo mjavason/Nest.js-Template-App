@@ -63,16 +63,6 @@ export const PAYSTACK_TEST_SECRET_KEY = process.env.PAYSTACK_TEST_SECRET_KEY || 
 export const PAYSTACK_TEST_PUBLIC_KEY = process.env.PAYSTACK_TEST_PUBLIC_KEY || 'xxxx';
 export const PAYSTACK_API_URL = 'https://api.paystack.co';
 
-export const DELIVERY_COST = 4950; // Base delivery cost
-export const CHICKEN_AVERAGE_WEIGHT = 5; // Weight threshold in kg
-export const COST_MULTIPLIER = 2 * CHICKEN_AVERAGE_WEIGHT; // Multiplier threshold for additional cost
-export const DISCOUNT_CAP = 2500;
-
-export const DEFAULT_COORDINATES = { longitude: 7.49, latitude: 6.389 };
-export const DEFAULT_ADDRESS = 'Gariki enugu';
-export const CONTACT_PHONE = '08148223122';
-export const CONTACT_EMAIL = 'startup@gmail.com';
-
 export const CACHE_EXPIRY = 1000 * 1 * 60 * 60 * 12; //12 hours (milliseconds)
 
 export const MONTH_NAMES = [

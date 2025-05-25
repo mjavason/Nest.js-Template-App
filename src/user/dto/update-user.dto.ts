@@ -4,44 +4,10 @@ import { ConvertToInt, Trim } from 'src/common/decorators/util.decorator';
 import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class UpdateUserDTO {
-  // @ApiProperty({
-  //   description: 'Indicates if the user’s phone number is verified',
-  //   default: undefined,
-  //   type: Boolean,
-  // })
-  // @IsBoolean()
   isPhoneNumberVerified: boolean = undefined;
-
-  // @ApiProperty({
-  //   description: 'Indicates if the user’s email is verified',
-  //   default: undefined,
-  //   type: Boolean,
-  // })
-  // @IsBoolean()
   isEmailVerified: boolean = undefined;
-
-  // @ApiProperty({
-  //   description: 'Type of user',
-  //   example: 'admin',
-  //   default: undefined,
-  // })
-  // @IsString()
   USER_TYPES: string = undefined;
-
-  // @ApiProperty({
-  //   description: 'Role assigned to the user',
-  //   example: 'manager',
-  //   default: undefined,
-  // })
-  // @IsString()
   role: string = undefined;
-
-  // @ApiProperty({
-  //   description: 'Current status of the user',
-  //   example: 'active',
-  //   default: undefined,
-  // })
-  // @IsString()
   status: string = undefined;
 
   @ApiPropertyOptional({

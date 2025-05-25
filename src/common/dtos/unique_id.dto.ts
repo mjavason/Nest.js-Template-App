@@ -6,7 +6,7 @@ export class UniqueIdDTO {
     description: 'Unique mongodb id',
     type: String,
     format: 'ObjectId',
-    example: '60d0fe4f5311236168a109ca', // example ObjectId
+    example: '60d0fe4f5311236168a109ca',
   })
   @IsMongoId()
   id: string;

@@ -30,7 +30,6 @@ export class ReviewController {
   async create(@Body() createReviewDto: CreateReviewDto, @CurrentUser() auth: IUserDocument) {
     const isDuplicate = await this.reviewService.findOne({ user: auth.id });
     if (isDuplicate) return { message: 'App rating already exists', data: isDuplicate };
-    // throw new BadRequestException('App rating already exists');
 
     createReviewDto.user = auth.id;
     return await this.reviewService.create(createReviewDto);

@@ -45,7 +45,6 @@ export class BucketController {
     const uploadedFiles = files.filter((file) => file.fieldname === 'uploadedFiles');
     if (uploadedFiles.length < 1) throw new BadRequestException('No files uploaded');
 
-    // Upload all files concurrently and wait for them to finish
     const uploadedFilesArray = await Promise.all(
       uploadedFiles.map(async (file) => {
         const fileUploaded = await this.bucketService.uploadToCloudinary(

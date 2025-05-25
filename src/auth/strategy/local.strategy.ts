@@ -32,10 +32,6 @@ export class LocalStrategy extends PassportStrategy(Strategy) {
         `${user.fullName}`,
         `${BASE_URL}/${API_PREFIX}/auth/verify-email/${verificationToken}`,
       );
-
-      // throw new ForbiddenException(
-      //   'Please verify your email before attempting to login. A verification mail has been sent to your email address. If not in inbox, check spam.',
-      // );
     }
 
     return user;

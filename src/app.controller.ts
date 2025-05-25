@@ -73,7 +73,7 @@ export class AppController {
   async downloadLogs(@Res() res: Response) {
     const output = fs.createWriteStream(path.join(__dirname, 'logs.zip'));
     const archive = archiver('zip', {
-      zlib: { level: 9 }, // Compression level
+      zlib: { level: 9 },
     });
 
     output.on('close', () => {
@@ -82,7 +82,7 @@ export class AppController {
         if (err) {
           throw new HttpException('Error downloading the logs', HttpStatus.INTERNAL_SERVER_ERROR);
         }
-        fs.unlinkSync(path.join(__dirname, 'logs.zip')); // Clean up the zip file after download
+        fs.unlinkSync(path.join(__dirname, 'logs.zip'));
       });
     });
 
@@ -95,8 +95,6 @@ export class AppController {
     });
 
     archive.pipe(output);
-
-    // Append files from a directory to the archive
     archive.directory(this.logFolderPath, false);
 
     await archive.finalize();

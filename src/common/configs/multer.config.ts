@@ -3,12 +3,11 @@ import { diskStorage } from 'multer';
 import os from 'os';
 import { extname } from 'path';
 
-// Get the system temporary directory
 const tempDir = os.tmpdir();
 
 const storage = diskStorage({
   destination: function (req, file, callback) {
-    callback(null, tempDir); // Use the system temporary directory
+    callback(null, tempDir);
   },
   filename: (req, file, callback) => {
     const uniqueSuffix = Date.now() + '-' + Math.round(Math.random() * 1e9);

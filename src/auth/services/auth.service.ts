@@ -84,7 +84,7 @@ export class AuthService {
     const user = await this.userService.findOne({ email });
     if (!user) throw new NotFoundException('User with email does not exist');
 
-    const code = codeGenerator(6); // Generate a 6-digit code
+    const code = codeGenerator(6);
     await this.tokenService.create({
       user: user.id,
       type: TOKEN_TYPE.PASSWORD_RESET,
@@ -157,7 +157,6 @@ export class AuthService {
       const oldRefresh = await this.tokenService.findOne({ token });
       if (!oldRefresh) throw new ForbiddenException(failureMessage);
 
-      // one month
       if (isExpired(oldRefresh?.createdAt, A_MONTH_IN_MINUTES)) {
         await oldRefresh.deleteOne();
         throw new ForbiddenException(failureMessage);
@@ -180,7 +179,6 @@ export class AuthService {
   async generateRefreshToken(userId) {
     const refreshToken = codeGenerator(9);
 
-    // Delete previous existing tokens, then create new one
     const prevRefreshToken = await this.tokenService.findOne({
       user: userId,
       type: TOKEN_TYPE.REFRESH_TOKEN,

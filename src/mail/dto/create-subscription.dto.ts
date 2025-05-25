@@ -2,6 +2,8 @@ import { ApiProperty } from '@nestjs/swagger';
 import { IsEmail } from 'class-validator';
 
 export class CreateMailSubscriptionDto {
+  verified?: boolean = undefined;
+
   @ApiProperty({
     description: 'Subscriber email address',
     type: String,
@@ -9,13 +11,4 @@ export class CreateMailSubscriptionDto {
   })
   @IsEmail()
   emailAddress: string;
-
-  //   @ApiProperty({
-  //     description: 'Verification status of the subscription',
-  //     type: Boolean,
-  //     default: false,
-  //   })
-  //   @IsBoolean()
-  //   @IsOptional()
-  verified?: boolean = undefined;
 }

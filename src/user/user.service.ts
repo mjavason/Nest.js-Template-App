@@ -4,19 +4,19 @@ import { JwtService } from '@nestjs/jwt';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
 import { MailService } from 'src/mail/mail.service';
-import { GenericService } from '../common/providers/generic.service'; // Import the GenericService
+import { GenericService } from '../common/providers/generic.service';
 import { IUser, IUserDocument } from './user.interface';
 import { User } from './user.schema';
 
 @Injectable()
 export class UserService extends GenericService<IUserDocument> {
   constructor(
-    @InjectModel(User.name) private readonly userModel: Model<IUserDocument>,
+    @InjectModel(User.name) userModel: Model<IUserDocument>,
     private readonly config: ConfigService,
     private readonly mailService: MailService,
     private readonly jwtService: JwtService,
   ) {
-    super(userModel); // Pass the model to the GenericService constructor
+    super(userModel);
   }
 
   async updateProfile(id: string, updates: Partial<IUser>) {
@@ -33,7 +33,7 @@ export class UserService extends GenericService<IUserDocument> {
       );
       if (!mailSent) {
         throw new InternalServerErrorException(
-          'Unknown error occured: Unable to send verification mail',
+          'Unknown error occurred: Unable to send verification mail',
         );
       }
 

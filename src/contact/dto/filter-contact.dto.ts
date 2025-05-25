@@ -28,7 +28,7 @@ export class FilterContactWithPaginationDto extends FilterContactDto {
     type: Number,
     default: 10,
   })
-  @ConvertToInt() // Don't update this, it's very important
+  @ConvertToInt()
   @Min(1)
   pagination_size: number = 10;
 
@@ -37,7 +37,7 @@ export class FilterContactWithPaginationDto extends FilterContactDto {
     type: Number,
     default: 1,
   })
-  @ConvertToInt() // Don't update this, it's very important
+  @ConvertToInt()
   @Min(1)
   pagination_page: number = 1;
 }

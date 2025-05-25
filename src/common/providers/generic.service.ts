@@ -29,7 +29,6 @@ export class GenericService<T extends Document> {
   }
 
   async findAllNoAutoPopulate(filter: FilterQuery<T>) {
-    // Model.find(query).setOptions({ autopopulate: false });
     return await this.model
       .find(filter)
       .sort({ createdAt: 'desc' })
@@ -49,15 +48,11 @@ export class GenericService<T extends Document> {
     const prevMonth = getUTCMonthStartAndEnd(now.getFullYear(), now.getMonth() - 1);
     const currMonth = getUTCMonthStartAndEnd(now.getFullYear(), now.getMonth());
 
-    // console.log('start of previous month', prevMonth.startDate);
-    // console.log('end of previous month', prevMonth.endDate);
-    // console.log('start of current month', currMonth.startDate);
-
     const result = await this.model.aggregate([
       {
         $match: {
           ...filter,
-          createdAt: { $gte: prevMonth.startDate }, // Items from previous month to the start of the current month
+          createdAt: { $gte: prevMonth.startDate },
         },
       },
       {
@@ -77,9 +72,6 @@ export class GenericService<T extends Document> {
       },
     ]);
 
-    // console.log(result);
-
-    // Extract counts for the previous and current month
     const previousMonthCount =
       result.find(
         (entry) =>
@@ -94,7 +86,6 @@ export class GenericService<T extends Document> {
           entry._id.month === currMonth.startDate.getMonth() + 1,
       )?.itemCount || 0;
 
-    // Calculate the percentage difference
     const percentageDifference =
       previousMonthCount === 0
         ? currentMonthCount > 0
@@ -111,11 +102,11 @@ export class GenericService<T extends Document> {
         $match: filter,
       },
       {
-        $count: 'total', // Count all matching items
+        $count: 'total',
       },
     ]);
 
-    return result[0]?.total || 0; // Return the count or 0 if no items found
+    return result[0]?.total || 0;
   }
 
   async update(id: string, updateDto: Partial<T>) {
@@ -124,7 +115,7 @@ export class GenericService<T extends Document> {
     });
 
     if (!result) {
-      throw new BadRequestException('Unable to update entity, it doesnt exist?');
+      throw new BadRequestException('Unable to update entity, it does not exist?');
     }
 
     return result;
@@ -133,7 +124,7 @@ export class GenericService<T extends Document> {
   async remove(id: string) {
     const result = await this.model.findByIdAndDelete(id);
     if (!result) {
-      throw new BadRequestException('Unable to delete entity, it doesnt exist?');
+      throw new BadRequestException('Unable to delete entity, it does not exist?');
     }
 
     return result;
@@ -146,24 +137,22 @@ export class GenericService<T extends Document> {
       },
       {
         $group: {
-          _id: { dayOfWeek: { $dayOfWeek: '$createdAt' } }, // Group by day of the week (1=Sunday, 7=Saturday)
-          total: { $sum: 1 }, // Sum the total sales for each day
-          // total: { $sum: '$totalAmount' }, // Sum the total sales for each day
+          _id: { dayOfWeek: { $dayOfWeek: '$createdAt' } },
+          total: { $sum: 1 },
         },
       },
       {
-        $sort: { '_id.dayOfWeek': 1 }, // Sort by day of the week
+        $sort: { '_id.dayOfWeek': 1 },
       },
       {
         $project: {
           dayOfWeek: '$_id.dayOfWeek',
           total: 1,
-          _id: 0, // Remove the _id field for cleaner output
+          _id: 0,
         },
       },
     ]);
 
-    // Initialize all days of the week with zero sales
     const dayNames = [
       '',
       'Sunday',
@@ -179,9 +168,8 @@ export class GenericService<T extends Document> {
       total: 0,
     }));
 
-    // Merge existing sales data with the initialized week
     report.forEach((report) => {
-      const dayIndex = report.dayOfWeek - 1; // Convert MongoDB's 1-indexed dayOfWeek to 0-indexed
+      const dayIndex = report.dayOfWeek - 1;
       fullWeek[dayIndex].total = report.total;
     });
 

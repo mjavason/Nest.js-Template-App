@@ -26,10 +26,3 @@ export const codeGenerator = (length = 6) => {
 };
 
 export const nanoCharacters = '0123456789ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz';
-
-// const characters = '0123456789';
-// let token = '';
-// for (let i = 0; i < 6; i++) {
-//   token += characters[Math.floor(Math.random() * characters.length)];
-// }
-// return token;

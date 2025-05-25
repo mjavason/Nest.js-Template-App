@@ -2,12 +2,6 @@ import { ApiProperty, ApiPropertyOptional } from '@nestjs/swagger';
 import { IsNumber, IsOptional, IsString, Max, Min } from 'class-validator';
 
 export class CreateReviewDto {
-  // @ApiProperty({
-  //   description: 'ID of the user',
-  //   type: String,
-  //   example: '64afc3a2f23b9e0d12345abc',
-  // })
-  // @IsMongoId()
   user: string = undefined;
 
   @ApiProperty({

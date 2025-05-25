@@ -40,23 +40,6 @@ export class RegisterDTO {
   @Trim()
   email: string;
 
-  // @ApiProperty({
-  //   description: 'Type of user',
-  //   enum: USER_TYPES,
-  //   example: USER_TYPES.USER,
-  // })
-  // @IsEnum(USER_TYPES)
-  // USER_TYPES: USER_TYPES;
-
-  // @ApiPropertyOptional({
-  //   description: 'Role of the user',
-  //   enum: USER_ROLES,
-  //   example: USER_ROLES.BUSINESS_OWNER,
-  // })
-  // @IsOptional()
-  // @IsEnum(USER_ROLES)
-  // role: USER_ROLES;
-
   @ApiProperty({
     required: false,
     example:
@@ -67,29 +50,6 @@ export class RegisterDTO {
   @Trim()
   @IsUrl()
   avatarURL: string;
-
-  // @ApiProperty({
-  //   required: false,
-  //   example: '3 Nnamani Nwene street',
-  // })
-  // @IsOptional()
-  // @IsString()
-  // @Trim()
-  // address: string;
-
-  // @ApiProperty({
-  //   description: 'Longitude of the user’s location',
-  //   example: 12.345678,
-  // })
-  // @IsNumber()
-  // mapLongitude: number;
-
-  // @ApiProperty({
-  //   description: 'Latitude of the user’s location',
-  //   example: 98.765432,
-  // })
-  // @IsNumber()
-  // mapLatitude: number;
 }
 
 export class RegisterWithAvatarDTO extends RegisterDTO {

@@ -1,4 +1,3 @@
-// @_learnable
 const avatarStyles: string[] = [
   'adventurer',
   'adventurer-neutral',
@@ -27,13 +26,11 @@ const avatarStyles: string[] = [
   'thumbs',
 ];
 
-//generates random avatar style from array above
 const getRandomAvatarStyle = (): string => {
   const random = Math.floor(Math.random() * avatarStyles.length);
   return avatarStyles[random];
 };
 
-//combines email and seed variable to generate truly random and unique avatar url
 function generateRandomAvatar(email: string): string {
   const _email = email.trim();
 

@@ -25,7 +25,6 @@ export class ContactController {
   @Post()
   @ApiOperation({ summary: 'Create a new contact message' })
   async create(@Body() createContactDto: CreateContactDto) {
-    //send email to all admins
     await this.contactService.create(createContactDto);
     return { message: 'Request sent successfully. A response will be sent within an hour' };
   }
