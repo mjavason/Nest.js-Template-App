@@ -1,5 +1,5 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { IsEmail, IsOptional, IsBoolean, Min } from 'class-validator';
+import { IsBoolean, IsEmail, IsOptional, Min } from 'class-validator';
 import { ConvertToInt } from 'src/common/decorators/util.decorator';
 
 export class FilterMailSubscriptionDto {

@@ -1,11 +1,4 @@
-import { Auth } from 'src/common/decorators/auth.decorator';
 import { Body, Controller, Delete, Get, Param, Post, Query } from '@nestjs/common';
-import { CreateMailSubscriptionDto } from './dto/create-subscription.dto';
-import { FilterMailSubscriptionWithPaginationDto } from './dto/filter-subscription.dto';
-import { MailService } from './mail.service';
-import { MailSubscriptionService } from './subscription.service';
-import { SendMailParamsDTO } from './mail.dto';
-import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -14,6 +7,13 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Auth } from 'src/common/decorators/auth.decorator';
+import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
+import { CreateMailSubscriptionDto } from './dto/create-subscription.dto';
+import { FilterMailSubscriptionWithPaginationDto } from './dto/filter-subscription.dto';
+import { SendMailParamsDTO } from './mail.dto';
+import { MailService } from './mail.service';
+import { MailSubscriptionService } from './subscription.service';
 
 @Controller('mail-subscription')
 @ApiTags('Mail Subscription')

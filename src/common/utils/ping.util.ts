@@ -1,6 +1,6 @@
+import { Logger } from '@nestjs/common';
 import axios from 'axios';
 import { BASE_URL } from '../configs/constants';
-import { Logger } from '@nestjs/common';
 
 export async function pingSelf() {
   try {

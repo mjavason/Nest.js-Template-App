@@ -1,12 +1,4 @@
-import archiver from 'archiver';
-import fs from 'fs';
-import path from 'path';
-import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
-import { AppService } from './app.service';
-import { Cache } from '@nestjs/cache-manager';
-import { CACHE_MANAGER } from '@nestjs/cache-manager';
-import { Response } from 'express';
-import { SetCacheDto } from './common/dtos/cache.dto';
+import { Cache, CACHE_MANAGER } from '@nestjs/cache-manager';
 import {
   Body,
   Controller,
@@ -18,7 +10,14 @@ import {
   Post,
   Res,
 } from '@nestjs/common';
+import { ApiOperation, ApiResponse, ApiTags } from '@nestjs/swagger';
+import archiver from 'archiver';
+import { Response } from 'express';
+import fs from 'fs';
+import path from 'path';
+import { AppService } from './app.service';
 import { CACHE_EXPIRY } from './common/configs/constants';
+import { SetCacheDto } from './common/dtos/cache.dto';
 @Controller()
 @ApiTags('Default')
 export class AppController {

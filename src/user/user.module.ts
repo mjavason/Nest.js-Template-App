@@ -1,11 +1,11 @@
 import { Module } from '@nestjs/common';
-import { UserService } from './user.service';
-import { UserController } from './user.controller';
-import { User, userSchema } from './user.schema';
+import { ConfigService } from '@nestjs/config';
+import { JwtModule } from '@nestjs/jwt';
 import { MongooseModule } from '@nestjs/mongoose';
 import { MailModule } from 'src/mail/mail.module';
-import { JwtModule } from '@nestjs/jwt';
-import { ConfigService } from '@nestjs/config';
+import { UserController } from './user.controller';
+import { User, userSchema } from './user.schema';
+import { UserService } from './user.service';
 
 @Module({
   imports: [

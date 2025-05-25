@@ -1,4 +1,4 @@
-import { FilterQuery, PopulateOptions, Model } from 'mongoose';
+import { FilterQuery, Model, PopulateOptions } from 'mongoose';
 
 export interface PaginationOptions {
   limit?: number;

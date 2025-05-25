@@ -1,5 +1,3 @@
-import { APP_NAME, MESSAGES } from '../configs/constants';
-import { Response } from 'express';
 import {
   ArgumentsHost,
   Catch,
@@ -7,9 +5,11 @@ import {
   ForbiddenException,
   HttpException,
   HttpStatus,
-  UnauthorizedException,
   Logger,
+  UnauthorizedException,
 } from '@nestjs/common';
+import { Response } from 'express';
+import { APP_NAME, MESSAGES } from '../configs/constants';
 import { ApiService } from '../utils/api.util';
 
 @Catch()

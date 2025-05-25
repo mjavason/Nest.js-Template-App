@@ -1,21 +1,3 @@
-import { ApiBody, ApiConsumes, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
-import { AuthGuard } from '@nestjs/passport';
-import { AuthService } from '../services/auth.service';
-import { BASE_URL } from 'src/common/configs/constants';
-import { BucketService } from 'src/bucket/bucket.service';
-import { FileInterceptor } from '@nestjs/platform-express';
-import { ForgotPasswordDto, RefreshTokenDto, VerifyTokenDto } from '../dto/token.dto';
-import { generateRandomAvatar } from 'src/common/utils/dicebar.util';
-import { IDecodedToken } from '../interfaces/auth.interface';
-import { JwtService } from '@nestjs/jwt';
-import { LocalAuthGuard } from '../guard/local.guard';
-import { LoginDTO, NewPasswordDto, RegisterWithAvatarDTO } from '../dto';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { Response } from 'express';
-import { TOKEN_TYPE } from '../interfaces/token.interface';
-import { TokenService } from '../services/token.service';
-import { uploadImages } from 'src/common/configs/multer.config';
-import { UserService } from 'src/user/user.service';
 import {
   BadRequestException,
   Body,
@@ -33,8 +15,26 @@ import {
   UseGuards,
   UseInterceptors,
 } from '@nestjs/common';
+import { JwtService } from '@nestjs/jwt';
+import { AuthGuard } from '@nestjs/passport';
+import { FileInterceptor } from '@nestjs/platform-express';
+import { ApiBody, ApiConsumes, ApiExcludeEndpoint, ApiOperation, ApiTags } from '@nestjs/swagger';
+import { Response } from 'express';
+import { BucketService } from 'src/bucket/bucket.service';
+import { BASE_URL } from 'src/common/configs/constants';
+import { uploadImages } from 'src/common/configs/multer.config';
 import { Auth, CurrentUser } from 'src/common/decorators/auth.decorator';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
+import { generateRandomAvatar } from 'src/common/utils/dicebar.util';
 import { IUserDocument } from 'src/user/user.interface';
+import { UserService } from 'src/user/user.service';
+import { LoginDTO, NewPasswordDto, RegisterWithAvatarDTO } from '../dto';
+import { ForgotPasswordDto, RefreshTokenDto, VerifyTokenDto } from '../dto/token.dto';
+import { LocalAuthGuard } from '../guard/local.guard';
+import { IDecodedToken } from '../interfaces/auth.interface';
+import { TOKEN_TYPE } from '../interfaces/token.interface';
+import { AuthService } from '../services/auth.service';
+import { TokenService } from '../services/token.service';
 
 @Controller('auth')
 @ApiTags('Auth')

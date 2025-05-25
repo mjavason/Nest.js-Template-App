@@ -16,7 +16,6 @@ Quick generic template for spinning up Nest.js apps. Supports JWT authentication
 - **Caching**: Easily configurable caching mechanisms.
 - **Telegram Bot Error Monitoring**: Integrates with the Telegram Monitor Bot for error reporting.
 
-
 ## Prerequisites
 
 Before running this app, make sure you have the following installed:

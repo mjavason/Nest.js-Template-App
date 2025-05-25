@@ -1,7 +1,7 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import mongoose from 'mongoose';
 import bcrypt from 'bcrypt';
-import { IUser, USER_ROLES, Status, USER_TYPES } from './user.interface';
+import mongoose from 'mongoose';
+import { IUser, Status, USER_ROLES, USER_TYPES } from './user.interface';
 
 @Schema({
   timestamps: true,

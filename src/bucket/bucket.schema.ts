@@ -1,6 +1,6 @@
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
-import { IBucket } from './bucket.interface';
 import { UploadApiResponse } from 'cloudinary';
+import { IBucket } from './bucket.interface';
 
 @Schema({
   timestamps: true,

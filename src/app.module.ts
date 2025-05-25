@@ -1,20 +1,15 @@
-import mongooseAutoPopulate from 'mongoose-autopopulate';
+import { CacheModule } from '@nestjs/cache-manager';
+import { Logger, Module } from '@nestjs/common';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 import { APP_GUARD } from '@nestjs/core';
+import { MongooseModule } from '@nestjs/mongoose';
+import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
+import mongooseAutoPopulate from 'mongoose-autopopulate';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { AuthModule } from './auth/auth.module';
 import { BucketModule } from './bucket/bucket.module';
-import { CacheModule } from '@nestjs/cache-manager';
 import { CommonModule } from './common/common.module';
-import { ConfigModule, ConfigService } from '@nestjs/config';
-import { ContactModule } from './contact/contact.module';
-import { Logger, Module } from '@nestjs/common';
-import { MailModule } from './mail/mail.module';
-import { MongooseModule } from '@nestjs/mongoose';
-import { paginatePlugin, searchPlugin } from './common/db-plugins';
-import { ReviewModule } from './review/review.module';
-import { ThrottlerGuard, ThrottlerModule } from '@nestjs/throttler';
-import { UserModule } from './user/user.module';
 import {
   appConfig,
   CACHE_EXPIRY,
@@ -22,6 +17,11 @@ import {
   databaseConfig,
   mailConfig,
 } from './common/configs/constants';
+import { paginatePlugin, searchPlugin } from './common/db-plugins';
+import { ContactModule } from './contact/contact.module';
+import { MailModule } from './mail/mail.module';
+import { ReviewModule } from './review/review.module';
+import { UserModule } from './user/user.module';
 
 @Module({
   imports: [

@@ -1,17 +1,3 @@
-import bcrypt from 'bcrypt';
-import { A_MONTH_IN_MINUTES, API_PREFIX, BASE_URL } from 'src/common/configs/constants';
-import { codeGenerator } from 'src/common/utils/random_token.util';
-import { ConfigService } from '@nestjs/config';
-import { IDecodedToken } from '../interfaces/auth.interface';
-import { isExpired } from 'src/common/utils/date.util';
-import { IUserDocument } from 'src/user/user.interface';
-import { JwtService } from '@nestjs/jwt';
-import { MailService } from 'src/mail/mail.service';
-import { NewPasswordDto, RegisterDTO } from '../dto';
-import { TOKEN_TYPE } from '../interfaces/token.interface';
-import { TokenService } from './token.service';
-import { UserService } from 'src/user/user.service';
-import { VerifyTokenDto } from '../dto/token.dto';
 import {
   BadRequestException,
   ForbiddenException,
@@ -20,6 +6,20 @@ import {
   Logger,
   NotFoundException,
 } from '@nestjs/common';
+import { ConfigService } from '@nestjs/config';
+import { JwtService } from '@nestjs/jwt';
+import bcrypt from 'bcrypt';
+import { A_MONTH_IN_MINUTES, API_PREFIX, BASE_URL } from 'src/common/configs/constants';
+import { isExpired } from 'src/common/utils/date.util';
+import { codeGenerator } from 'src/common/utils/random_token.util';
+import { MailService } from 'src/mail/mail.service';
+import { IUserDocument } from 'src/user/user.interface';
+import { UserService } from 'src/user/user.service';
+import { NewPasswordDto, RegisterDTO } from '../dto';
+import { VerifyTokenDto } from '../dto/token.dto';
+import { IDecodedToken } from '../interfaces/auth.interface';
+import { TOKEN_TYPE } from '../interfaces/token.interface';
+import { TokenService } from './token.service';
 
 @Injectable()
 export class AuthService {

@@ -1,8 +1,8 @@
 import { Body, Controller, Post } from '@nestjs/common';
-import { MailService } from './mail.service';
-import { SendMailDTO } from './mail.dto';
 import { ApiOperation, ApiTags } from '@nestjs/swagger';
 import { Auth } from 'src/common/decorators/auth.decorator';
+import { SendMailDTO } from './mail.dto';
+import { MailService } from './mail.service';
 
 @Controller('mail')
 @ApiTags('Mail')

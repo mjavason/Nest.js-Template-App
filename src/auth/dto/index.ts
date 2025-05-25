@@ -1,15 +1,15 @@
 import { ApiProperty } from '@nestjs/swagger';
-import { MulterFile } from 'src/common/interfaces/multer.interface';
-import { ToLowerCase, Trim } from 'src/common/decorators/util.decorator';
 import {
-  IsString,
   IsEmail,
-  IsStrongPassword,
   IsNotEmpty,
-  MinLength,
   IsOptional,
+  IsString,
+  IsStrongPassword,
   IsUrl,
+  MinLength,
 } from 'class-validator';
+import { ToLowerCase, Trim } from 'src/common/decorators/util.decorator';
+import { MulterFile } from 'src/common/interfaces/multer.interface';
 
 export class RegisterDTO {
   @ApiProperty({ description: 'First name of the user', example: 'John' })

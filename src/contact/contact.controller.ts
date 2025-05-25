@@ -1,9 +1,4 @@
-import { Auth } from 'src/common/decorators/auth.decorator';
 import { Body, Controller, Get, Param, Post, Query } from '@nestjs/common';
-import { ContactService } from './contact.service';
-import { CreateContactDto } from './dto/create-contact.dto';
-import { FilterContactWithPaginationDto } from './dto/filter-contact.dto';
-import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
 import {
   ApiBadRequestResponse,
   ApiInternalServerErrorResponse,
@@ -12,6 +7,11 @@ import {
   ApiTags,
   ApiUnauthorizedResponse,
 } from '@nestjs/swagger';
+import { Auth } from 'src/common/decorators/auth.decorator';
+import { UniqueIdDTO } from 'src/common/dtos/unique_id.dto';
+import { ContactService } from './contact.service';
+import { CreateContactDto } from './dto/create-contact.dto';
+import { FilterContactWithPaginationDto } from './dto/filter-contact.dto';
 
 @Controller('contacts')
 @ApiTags('Contact')

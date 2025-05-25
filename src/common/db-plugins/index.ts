@@ -1,5 +1,5 @@
-import { search } from './search';
 import { pagination } from './paginate';
+import { search } from './search';
 
 export function paginatePlugin(schema: any) {
   schema.statics.paginate = pagination;

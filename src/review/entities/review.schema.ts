@@ -1,8 +1,8 @@
-import { IReview } from '../review.interface';
-import { IUserDocument } from 'src/user/user.interface';
 import { Prop, Schema, SchemaFactory } from '@nestjs/mongoose';
 import { Types } from 'mongoose';
+import { IUserDocument } from 'src/user/user.interface';
 import { User } from 'src/user/user.schema';
+import { IReview } from '../review.interface';
 
 @Schema({
   timestamps: true,

@@ -1,9 +1,9 @@
-import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
 import { BadRequestException, Injectable } from '@nestjs/common';
 import { JwtService } from '@nestjs/jwt';
-import { MailService } from 'src/mail/mail.service';
 import { PassportStrategy } from '@nestjs/passport';
 import { Strategy } from 'passport-local';
+import { API_PREFIX, BASE_URL } from 'src/common/configs/constants';
+import { MailService } from 'src/mail/mail.service';
 import { UserService } from 'src/user/user.service';
 
 @Injectable()

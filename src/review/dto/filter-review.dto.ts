@@ -1,6 +1,6 @@
 import { ApiPropertyOptional } from '@nestjs/swagger';
-import { ConvertToInt } from 'src/common/decorators/util.decorator';
 import { IsMongoId, IsOptional, Max, Min } from 'class-validator';
+import { ConvertToInt } from 'src/common/decorators/util.decorator';
 
 export class FilterReviewDto {
   @ApiPropertyOptional({

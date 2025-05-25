@@ -1,11 +1,11 @@
-import { Bucket } from './bucket.schema';
-import { cloudinaryInstance } from 'src/common/configs/cloudinary.config';
-import { GenericService } from '../common/providers/generic.service';
-import { IBucketDocument } from './bucket.interface';
 import { Injectable, NotFoundException } from '@nestjs/common';
 import { InjectModel } from '@nestjs/mongoose';
 import { Model } from 'mongoose';
+import { cloudinaryInstance } from 'src/common/configs/cloudinary.config';
 import { APP_NAME } from 'src/common/configs/constants';
+import { GenericService } from '../common/providers/generic.service';
+import { IBucketDocument } from './bucket.interface';
+import { Bucket } from './bucket.schema';
 // Import the GenericService
 
 @Injectable()

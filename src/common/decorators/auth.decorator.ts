@@ -1,12 +1,3 @@
-import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
-import { USER_ROLES, USER_TYPES } from 'src/user/user.interface';
-import { RolesGuard } from 'src/auth/guard/role.guard';
-import {
-  ApiBadRequestResponse,
-  ApiBearerAuth,
-  ApiForbiddenResponse,
-  ApiUnauthorizedResponse,
-} from '@nestjs/swagger';
 import {
   ExecutionContext,
   SetMetadata,
@@ -14,6 +5,15 @@ import {
   applyDecorators,
   createParamDecorator,
 } from '@nestjs/common';
+import {
+  ApiBadRequestResponse,
+  ApiBearerAuth,
+  ApiForbiddenResponse,
+  ApiUnauthorizedResponse,
+} from '@nestjs/swagger';
+import { JwtAuthGuard } from 'src/auth/guard/jwt.guard';
+import { RolesGuard } from 'src/auth/guard/role.guard';
+import { USER_ROLES, USER_TYPES } from 'src/user/user.interface';
 
 export function Auth(USER_ROLES: USER_ROLES[] = [], USER_TYPE?: USER_TYPES): MethodDecorator {
   return applyDecorators(

@@ -1,7 +1,7 @@
 import { Injectable, Logger } from '@nestjs/common';
 import { ConfigService } from '@nestjs/config';
-import Handlebars from 'handlebars';
 import fs from 'fs';
+import Handlebars from 'handlebars';
 import { transporter } from 'src/common/configs/mail.config';
 import { SendMailDTO, SendWelcomeMailDTO } from './mail.dto';
 
