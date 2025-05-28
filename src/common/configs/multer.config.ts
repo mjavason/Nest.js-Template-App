@@ -16,13 +16,15 @@ const storage = diskStorage({
   },
 });
 
-const defaultUploadSettings = {
+export const upload = {
+  storage,
   limits: {
-    fileSize: 5 * 1024 * 1024, // Set the maximum file size to 5 MB
+    fileSize: 5 * 1024 * 1024,
   },
 };
 
-const imageUploadSettings = {
+export const uploadImages = {
+  storage,
   fileFilter: (req, file, callback) => {
     if (!file.mimetype.match(/\/(jpg|jpeg|png|gif)$/)) {
       return callback(new BadRequestException('Only image files are allowed!'), false);
@@ -32,10 +34,4 @@ const imageUploadSettings = {
   limits: {
     fileSize: 5 * 1024 * 1024, // Set the maximum file size to 5 MB
   },
-};
-
-export const upload = { storage, defaultUploadSettings };
-export const uploadImages = {
-  storage,
-  ...imageUploadSettings,
 };
