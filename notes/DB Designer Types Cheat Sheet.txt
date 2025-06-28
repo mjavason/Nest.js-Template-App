@@ -1,28 +1,30 @@
-Using the dbdesigner types below. follow the structure strictly in that exact same text format and create the database design above. Im not asking for a database schema, just follow the types i've shown below and map it. Just leave enums as strings, they do not exist for the tech im working with, do not try to show the types, just leave as string. do not do this role string -- 'Customer' or 'Courier', just leave as string. Remember, keep it in the same format as below. do not add any comments. just leave it bare. Give it to me in the text like format, the way it is below
+Using the dbdiagram.io types below, follow the structure strictly in that exact same text format and create a database design for the app i'll describe. Im not asking for a database schema, just follow the types i've shown below and map it. Just leave enums as strings, they do not exist for the tech im working with, do not try to show the types, just leave as string. do not do this role string -- 'Customer' or 'Courier', just leave as string. Remember, keep it in the same format as below. do not add any comments. just leave it bare. Give it to me in the text like format, the way it is below
+// Docs: https://dbml.dbdiagram.io/docs
 
-Table_A {
-	id integer pk increments unique
-	name string
-	description text
-	created_at datetime
-	is_active boolean
-	score decimal(5,2)
+Table follows {
+  following_user_id integer
+  followed_user_id integer
+  created_at timestamp
 }
 
-Table_B {
-	id integer pk increments unique
-	table_a_id integer > Table_A.id
-	status string
-	start_date date
-	end_date date
-	metadata object
+Table users {
+  id integer [primary key]
+  username varchar
+  role varchar
+  created_at timestamp
 }
 
-Table_C {
-	id integer pk increments unique
-	table_b_id integer > Table_B.id
-	file_data blob
-	price decimal(10,2)
-	quantity integer
-	notes text
+Table posts {
+  id integer [primary key]
+  title varchar
+  body text [note: 'Content of the post']
+  user_id integer [not null]
+  status varchar
+  created_at timestamp
 }
+
+Ref user_posts: posts.user_id > users.id // many-to-one
+
+Ref: users.id < follows.following_user_id
+
+Ref: users.id < follows.followed_user_id
